@@ -11,7 +11,10 @@ class _TabbarPageState extends State<TabbarPage> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('TabbarPage'),
+      child: Text(
+        'TabbarPage',
+        style: TextStyle(decoration: TextDecoration.none),
+      ),
     );
   }
 }

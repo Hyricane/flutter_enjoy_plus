@@ -1,7 +1,20 @@
-
 {
   "app": {
-    "signingConfigs": [],
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "/Users/liqiangli/.ohos/config/default_ohos_YY6hqfb0rghn7a_g03bAOFGbMcTMEq_-RU5i1S34VJU=.cer",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001B0E67B3929C5345BFD2B3C031F0C2333672D03ABC7E39048C1497914E34D9DAC8C0C13DE0E37AF0",
+          "profile": "/Users/liqiangli/.ohos/config/default_ohos_YY6hqfb0rghn7a_g03bAOFGbMcTMEq_-RU5i1S34VJU=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "/Users/liqiangli/.ohos/config/default_ohos_YY6hqfb0rghn7a_g03bAOFGbMcTMEq_-RU5i1S34VJU=.p12",
+          "storePassword": "0000001BB976CEA34FCFEB91C9C3424BE5A9FC8E409F0441E5197BF08D3E9CAE51CF5CA20F108231EF7D57"
+        }
+      }
+    ],
     "products": [
       {
         "name": "default",
