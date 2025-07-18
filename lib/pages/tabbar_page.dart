@@ -11,13 +11,15 @@ class _TabbarPageState extends State<TabbarPage> {
   List tabsList = [
     {
       'label': '首页',
-      'icon': '/tabs/home_default.png',
-      'activeIcon': '/tabs/home_active.png'
+      // 必须要加回来  其他平台识别不了
+      // 路径从assets开始写
+      'icon': 'assets/tabs/home_default.png',
+      'activeIcon': 'assets/tabs/home_active.png'
     },
     {
       'label': '我的',
-      'icon': '/tabs/my_default.png',
-      'activeIcon': '/tabs/my_active.png'
+      'icon': 'assets/tabs/my_default.png',
+      'activeIcon': 'assets/tabs/my_active.png'
     }
   ]; // 底部导航栏数据
 
