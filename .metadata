@@ -15,7 +15,7 @@ migration:
     - platform: root
       create_revision: d2f69868d3cb1bb31683ae866f94fe52c09b0f6c
       base_revision: d2f69868d3cb1bb31683ae866f94fe52c09b0f6c
-    - platform: ohos
+    - platform: web
       create_revision: d2f69868d3cb1bb31683ae866f94fe52c09b0f6c
       base_revision: d2f69868d3cb1bb31683ae866f94fe52c09b0f6c
 
