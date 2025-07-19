@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:enjoy_plus_flutter_7/pages/home/home_notify_list.dart';
+import 'package:enjoy_plus_flutter_7/utils/RequestDio.dart';
 import 'package:flutter/material.dart';
 
 import 'home_nav.dart';
@@ -13,6 +14,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  getData() async {
+    // 前端请求服务器会有跨域问题
+    // final res =
+    //     await requestDio._dio.get('https://live-api.itheima.net/announcement');
+    // print(res.data);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
