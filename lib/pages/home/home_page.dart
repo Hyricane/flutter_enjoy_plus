@@ -22,9 +22,8 @@ class _HomePageState extends State<HomePage> {
 
   getData() async {
     // 前端请求服务器会有跨域问题
-    // final res =
-    //     await requestDio._dio.get('https://live-api.itheima.net/announcement');
-    // print(res.data);
+    final res = await requestDio.get('/announcement');
+    print(res.data);
   }
 
   @override

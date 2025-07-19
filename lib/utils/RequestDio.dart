@@ -18,7 +18,7 @@ class RequestDio {
       ..connectTimeout = Duration(seconds: GlobalConstants.TIME_OUT)
       ..sendTimeout = Duration(seconds: GlobalConstants.TIME_OUT);
 
-    // 配置拦截器
+    // 配置拦截器(新来的保安 啥也不会)
     _setInterceptors();
   }
 
@@ -42,6 +42,11 @@ class RequestDio {
         handler.next(exception);
       },
     ));
+  }
+
+  // 封装一个get 替代他的get
+  Future get(String path, {Map<String, dynamic>? params}) {
+    return _dio.get(path, queryParameters: params);
   }
 }
 
