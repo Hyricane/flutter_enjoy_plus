@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import 'home_nav.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -24,6 +26,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: ListView(padding: EdgeInsets.all(10), children: [
         // 导航栏
+        HomeNav(),
         // 单张图
         ClipRRect(
           borderRadius: BorderRadius.circular(10),
