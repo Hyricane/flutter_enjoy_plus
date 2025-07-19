@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:enjoy_plus_flutter_7/pages/home/home_notify_list.dart';
 import 'package:flutter/material.dart';
 
 import 'home_nav.dart';
@@ -34,8 +35,9 @@ class _HomePageState extends State<HomePage> {
             'assets/images/banner@2x.jpg',
             fit: BoxFit.cover,
           ),
-        )
+        ),
         // 公告区
+        HomeNotifyList()
       ]),
     );
   }
