@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'home/home_page.dart';
+
 class TabbarPage extends StatefulWidget {
   const TabbarPage({Key? key}) : super(key: key);
 
@@ -49,7 +51,15 @@ class _TabbarPageState extends State<TabbarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text("TabbarPage"),
+      body: IndexedStack(
+        index: activeIndex,
+        children: [
+          HomePage(),
+          Container(
+            color: Colors.blue,
+          )
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: activeIndex,
