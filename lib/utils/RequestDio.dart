@@ -17,6 +17,31 @@ class RequestDio {
       ..baseUrl = GlobalConstants.BASE_URL
       ..connectTimeout = Duration(seconds: GlobalConstants.TIME_OUT)
       ..sendTimeout = Duration(seconds: GlobalConstants.TIME_OUT);
+
+    // 配置拦截器
+    _setInterceptors();
+  }
+
+  // 配置拦截器
+  _setInterceptors() {
+    _dio.interceptors.add(InterceptorsWrapper(
+      // 添加一个请求拦截器  options请求配置对象 {}   handler处理函数对象
+      // 触发时机:  请求到服务器之前 先走这个函数逻辑 然后再发出  =>  必须放行
+      onRequest: (RequestOptions options, RequestInterceptorHandler handler) {
+        // 为了保证后续逻辑正常执行  必须放行
+        handler.next(options); // 继续往后走逻辑
+      },
+      // 添加一个响应拦截器  response响应数据对象 {}   handler处理函数对象   =>  必须放行
+      // 触发时机:  服务器返回数据到客户端之前 先走这个函数逻辑 然后再返回给客户端
+      onResponse:
+          (Response<dynamic> response, ResponseInterceptorHandler handler) {
+        handler.next(response); // 继续往后走逻辑
+      },
+      // 添加一个错误拦截器  exception异常对象 {}   handler处理函数对象   =>  必须放行
+      onError: (DioException exception, ErrorInterceptorHandler handler) {
+        handler.next(exception);
+      },
+    ));
   }
 }
 
