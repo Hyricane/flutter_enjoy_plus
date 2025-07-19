@@ -1,3 +1,4 @@
+import 'package:enjoy_plus_flutter_7/pages/mine/mine_page.dart';
 import 'package:flutter/material.dart';
 
 import 'home/home_page.dart';
@@ -25,7 +26,7 @@ class _TabbarPageState extends State<TabbarPage> {
     }
   ]; // 底部导航栏数据
 
-  int activeIndex = 0; // 默认选中的索引
+  int activeIndex = 1; // 默认选中的索引
 
   List<BottomNavigationBarItem> getTabsBar() {
     List<BottomNavigationBarItem> list = [];
@@ -53,12 +54,7 @@ class _TabbarPageState extends State<TabbarPage> {
     return Scaffold(
       body: IndexedStack(
         index: activeIndex,
-        children: [
-          HomePage(),
-          Container(
-            color: Colors.blue,
-          )
-        ],
+        children: [HomePage(), MinePage()],
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
