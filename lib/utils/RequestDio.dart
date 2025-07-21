@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:enjoy_plus_flutter_7/constants/index.dart';
+import 'package:enjoy_plus_flutter_7/utils/PromptAction.dart';
 
 class RequestDio {
   // 不暴露给外部用  用它发请求麻烦
@@ -36,7 +37,20 @@ class RequestDio {
       // 触发时机:  服务器返回数据到客户端之前 先走这个函数逻辑 然后再返回给客户端
       onResponse:
           (Response<dynamic> response, ResponseInterceptorHandler handler) {
-        handler.next(response); // 继续往后走逻辑
+        // handler.next(response); // 继续往后走逻辑
+
+        // 根据情况判断
+        // 目前只处理2xx 其他统一抛出异常
+        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+          // 继续往下走
+          handler.next(response);
+        } else {
+          // 4xx   401token问题  response.statusCode! == 401  清除token  回到登录 提示
+          // 如果遇到2xx之外的状态码 应该处理一个失败的Future回去 有一个原因response.requestOptions
+          // response.requestOptions 获取请求信息
+          PromptAction.error(response.statusMessage ?? '网络错误');
+          handler.reject(DioException(requestOptions: response.requestOptions));
+        }
       },
       // 添加一个错误拦截器  exception异常对象 {}   handler处理函数对象   =>  必须放行
       onError: (DioException exception, ErrorInterceptorHandler handler) {
@@ -77,15 +91,18 @@ class RequestDio {
 
   // 封装一个处理响应结果的函数  res.data['data']
   _handleResponse(Response<dynamic> res) {
+    // 业务状态码  200      没拿到数据  拿到数据
     if (res.data['code'] == GlobalConstants.CODE) {
       // 10000 才有数据  剥离数据
       return res.data['data'];
     }
 
+    // 提示
+    PromptAction.error(res.data['message']);
     throw Exception(res.data['message']);
   }
 }
 
 final RequestDio requestDio = RequestDio();
 // const int money = 1000;
-// requestDio._dio.get('/xxx')  基础地址 超时时间  拦截器(请求头 错误处理) 
+// requestDio._dio.get('/xxx')  基础地址 超时时间  拦截器(请求头 错误处理)

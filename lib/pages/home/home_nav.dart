@@ -31,7 +31,7 @@ class HomeNav extends StatelessWidget {
           onTap: () {
             // 跳转页面  命名路由跳转  需要配合路由表
             // Navigator.pushNamed(context, '/home');
-            PromptAction.info('成功');
+            // PromptAction.info('成功');
             // xxxxx('哈哈')
             // Fluttertoast.showToast(
             //     msg: '测试',
