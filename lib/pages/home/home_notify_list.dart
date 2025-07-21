@@ -80,7 +80,7 @@ class _HomeNotifyListState extends State<HomeNotifyList> {
           ),
         ),
         onTap: () {
-          // Navigator.pushNamed(context, '/notifyDetail');
+          Navigator.pushNamed(context, '/notice_detail');
         },
       );
     }).toList();
