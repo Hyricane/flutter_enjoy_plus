@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../../utils/PromptAction.dart';
 
 // 无状态组件 只是显示数据  不负责修改数据
+// 无状态组件 没有this.context 只能通过build传递context
 class HomeNav extends StatelessWidget {
   HomeNav({Key? key}) : super(key: key);
 
@@ -24,11 +25,72 @@ class HomeNav extends StatelessWidget {
     }
   ];
 
-  List<Widget> _getChildren() {
+  Widget getBottom() {
+    return Container(
+      width: double.infinity,
+      height: 200,
+      color: Colors.red,
+      child: Column(
+        children: [
+          Text('1'),
+          Text('1'),
+          Text('1'),
+        ],
+      ),
+    );
+  }
+
+  List<Widget> _getChildren(BuildContext ctx) {
     List<Widget> children = [];
     for (int i = 0; i < navList.length; i++) {
       children.add(GestureDetector(
           onTap: () {
+            // showDialog(
+            //     context: ctx,
+            //     builder: (ctx) => AlertDialog(
+            //           title: Text('提示'),
+            //           content: Text('确定要执行此操作吗？'),
+            //           actions: [
+            //             TextButton(
+            //               onPressed: () => Navigator.pop(ctx),
+            //               child: Text('取消'),
+            //             ),
+            //             TextButton(
+            //               onPressed: () {
+            //                 // 执行操作
+            //                 Navigator.pop(ctx);
+            //               },
+            //               child: Text('确定'),
+            //             ),
+            //           ],
+            //         ));
+
+            ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
+                // action: SnackBarAction(
+                //   label: '确定',
+                //   onPressed: () {
+                //     print('666');
+                //   },
+                // ),
+                content: Text('我通知你'),
+                duration: Duration(seconds: 1)));
+            // showDialog(
+            //     context: ctx,
+            //     builder: (BuildContext ctx) {
+            //       return Text('12');
+            //     });
+            // showAboutDialog(context: ctx, children: [
+            //   Text('1'),
+            //   Text('2'),
+            //   Text('3'),
+            // ]);
+            // showDatePicker(
+            //     context: ctx,
+            //     initialDate: DateTime.now(),
+            //     firstDate: DateTime.now(),
+            //     lastDate: DateTime.now());
+
+            // showBottomSheet(context: ctx, builder: (ctx) => getBottom());
             // 跳转页面  命名路由跳转  需要配合路由表
             // Navigator.pushNamed(context, '/home');
             // PromptAction.info('成功');
@@ -63,7 +125,7 @@ class HomeNav extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: _getChildren(),
+        children: _getChildren(context),
       ),
     );
   }
