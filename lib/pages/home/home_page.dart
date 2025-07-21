@@ -15,6 +15,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List _notifyList = [];
+
   @override
   void initState() {
     super.initState();
@@ -26,7 +28,10 @@ class _HomePageState extends State<HomePage> {
     final res = await getNotifyListAPI(); // 公告列表
     // print(res.data['data']); // 后端真正返回的数据 => 直接看文档
     // print(res.data); // 后端真正返回的数据 => 直接看文档
-    print(res); // 后端真正返回的数据 => 直接看文档
+    // print(res); // 后端真正返回的数据 => 直接看文档
+    setState(() {
+      _notifyList = res;
+    });
     // res.data 之后的数据 由于没有类型 所以需要中括号
 
     // 想统一处理=>响应拦截器
@@ -64,7 +69,9 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         // 公告区
-        HomeNotifyList()
+        HomeNotifyList(
+          notifyList: _notifyList,
+        )
       ]),
     );
   }

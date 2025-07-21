@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class HomeNotifyList extends StatefulWidget {
-  const HomeNotifyList({Key? key}) : super(key: key);
+  const HomeNotifyList({Key? key, required this.notifyList}) : super(key: key);
+
+  final List notifyList;
 
   @override
   _HomeNotifyListState createState() => _HomeNotifyListState();
@@ -9,23 +11,23 @@ class HomeNotifyList extends StatefulWidget {
 
 class _HomeNotifyListState extends State<HomeNotifyList> {
   // 现在是假数据 一会请求后端获取真实数据即可
-  List notifyList = [
-    {
-      'title': '中秋、国庆温馨提示中秋、国庆温馨提示',
-      'content': '中秋、国庆温馨提示中秋、国庆温馨提示中秋、国庆温馨提示中秋、国庆温馨提示中秋、国庆温馨提示中秋、国庆温馨提示',
-      'createdAt': '2024-09-22 15:00:00',
-    },
-    {
-      'title': '中秋、国庆温馨提示中秋、国庆温馨提示',
-      'content': '中秋、国庆温馨提示中秋、国庆温馨提示中秋、国庆温馨提示中秋、国庆温馨提示中秋、国庆温馨提示中秋、国庆温馨提示',
-      'createdAt': '2024-09-22 15:00:00',
-    },
-    {
-      'title': '中秋、国庆温馨提示中秋、国庆温馨提示',
-      'content': '中秋、国庆温馨提示中秋、国庆温馨提示中秋、国庆温馨提示中秋、国庆温馨提示中秋、国庆温馨提示中秋、国庆温馨提示',
-      'createdAt': '2024-09-22 15:00:00',
-    },
-  ];
+  // List notifyList = [
+  //   {
+  //     'title': '中秋、国庆温馨提示中秋、国庆温馨提示',
+  //     'content': '中秋、国庆温馨提示中秋、国庆温馨提示中秋、国庆温馨提示中秋、国庆温馨提示中秋、国庆温馨提示中秋、国庆温馨提示',
+  //     'createdAt': '2024-09-22 15:00:00',
+  //   },
+  //   {
+  //     'title': '中秋、国庆温馨提示中秋、国庆温馨提示',
+  //     'content': '中秋、国庆温馨提示中秋、国庆温馨提示中秋、国庆温馨提示中秋、国庆温馨提示中秋、国庆温馨提示中秋、国庆温馨提示',
+  //     'createdAt': '2024-09-22 15:00:00',
+  //   },
+  //   {
+  //     'title': '中秋、国庆温馨提示中秋、国庆温馨提示',
+  //     'content': '中秋、国庆温馨提示中秋、国庆温馨提示中秋、国庆温馨提示中秋、国庆温馨提示中秋、国庆温馨提示中秋、国庆温馨提示',
+  //     'createdAt': '2024-09-22 15:00:00',
+  //   },
+  // ];
 
   List<Widget> _getRowChildren() {
     return [
@@ -48,7 +50,7 @@ class _HomeNotifyListState extends State<HomeNotifyList> {
   }
 
   List<Widget> _getListViewChildren() {
-    return notifyList.map((item) {
+    return widget.notifyList.map((item) {
       return GestureDetector(
         child: Container(
           margin: const EdgeInsets.only(top: 10),
