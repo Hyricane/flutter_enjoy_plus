@@ -26,7 +26,7 @@ class _TabbarPageState extends State<TabbarPage> {
     }
   ]; // 底部导航栏数据
 
-  int activeIndex = 1; // 默认选中的索引
+  int activeIndex = 0; // 默认选中的索引
 
   List<BottomNavigationBarItem> getTabsBar() {
     List<BottomNavigationBarItem> list = [];

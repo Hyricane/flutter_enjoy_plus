@@ -5,5 +5,7 @@
   "main": "",
   "author": "",
   "license": "",
-  "dependencies": {}
+  "dependencies": {
+    "fluttertoast": "file:../har/fluttertoast.har"
+  }
 }
