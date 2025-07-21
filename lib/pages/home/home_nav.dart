@@ -43,15 +43,16 @@ class HomeNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      padding: EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
-          children: _getChildren(),
-          mainAxisAlignment: MainAxisAlignment.spaceAround),
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: _getChildren(),
+      ),
     );
   }
 }

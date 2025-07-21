@@ -35,11 +35,11 @@ class _HomeNotifyListState extends State<HomeNotifyList> {
         width: 25,
       ),
       // 文字
-      Text(
+      const Text(
         '社区',
         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
       ),
-      Text(
+      const Text(
         '公告',
         style: TextStyle(
             fontSize: 16, fontWeight: FontWeight.bold, color: Colors.orange),
@@ -51,8 +51,8 @@ class _HomeNotifyListState extends State<HomeNotifyList> {
     return notifyList.map((item) {
       return GestureDetector(
         child: Container(
-          margin: EdgeInsets.only(top: 10),
-          padding: EdgeInsets.all(10),
+          margin: const EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10), color: Colors.white),
           child: Column(
@@ -60,18 +60,19 @@ class _HomeNotifyListState extends State<HomeNotifyList> {
             children: [
               Text(
                 item['title'],
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(item['content']),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(
                 item['createdAt'],
-                style: TextStyle(color: Colors.grey),
+                style: const TextStyle(color: Colors.grey),
               ),
             ],
           ),
@@ -86,7 +87,7 @@ class _HomeNotifyListState extends State<HomeNotifyList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 10, bottom: 10),
+      margin: const EdgeInsets.only(top: 10, bottom: 10),
       child: Column(children: [
         Row(
           children: _getRowChildren(),
