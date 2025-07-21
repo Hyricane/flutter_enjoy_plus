@@ -4,6 +4,7 @@ import 'package:enjoy_plus_flutter_7/pages/home/home_notify_list.dart';
 import 'package:enjoy_plus_flutter_7/utils/RequestDio.dart';
 import 'package:flutter/material.dart';
 
+import '../../api/home.dart';
 import 'home_nav.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,8 +22,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   getData() async {
-    // 前端请求服务器会有跨域问题
-    final res = await requestDio.get('/announcement'); // 公告列表
+    // 前端请求服务器会有跨域问题 => 封装一个api函数  直接调用方法请求
+    final res = await getNotifyListAPI(); // 公告列表
     // print(res.data['data']); // 后端真正返回的数据 => 直接看文档
     // print(res.data); // 后端真正返回的数据 => 直接看文档
     print(res); // 后端真正返回的数据 => 直接看文档
