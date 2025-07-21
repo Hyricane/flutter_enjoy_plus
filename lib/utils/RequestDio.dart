@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:enjoy_plus_flutter_7/constants/index.dart';
 
 class RequestDio {
+  // 不暴露给外部用  用它发请求麻烦
   final Dio _dio = Dio();
   // int age = 18;
 
@@ -45,11 +46,24 @@ class RequestDio {
   }
 
   // 封装一个get 替代他的get
-  Future get(String path, {Map<String, dynamic>? params}) {
-    return _dio.get(path, queryParameters: params);
+  Future get(String path, {Map<String, dynamic>? params}) async {
+    // return _dio.get(path, queryParameters: params);
+
+    var res = await _dio.get(path, queryParameters: params);
+    return _handleResponse(res);
+  }
+
+  // 封装一个处理响应结果的函数  res.data['data']
+  _handleResponse(Response<dynamic> res) {
+    if (res.data['code'] == GlobalConstants.CODE) {
+      // 10000 才有数据  剥离数据
+      return res.data['data'];
+    }
+
+    throw Exception(res.data['message']);
   }
 }
 
-final RequestDio requestDio = new RequestDio();
+final RequestDio requestDio = RequestDio();
 // const int money = 1000;
 // requestDio._dio.get('/xxx')  基础地址 超时时间  拦截器(请求头 错误处理) 

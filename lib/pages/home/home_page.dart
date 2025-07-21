@@ -22,8 +22,21 @@ class _HomePageState extends State<HomePage> {
 
   getData() async {
     // 前端请求服务器会有跨域问题
-    final res = await requestDio.get('/announcement');
-    print(res.data);
+    final res = await requestDio.get('/announcement'); // 公告列表
+    // print(res.data['data']); // 后端真正返回的数据 => 直接看文档
+    // print(res.data); // 后端真正返回的数据 => 直接看文档
+    print(res); // 后端真正返回的数据 => 直接看文档
+    // res.data 之后的数据 由于没有类型 所以需要中括号
+
+    // 想统一处理=>响应拦截器
+
+    // 第二个请求  res.data['data']
+    // 第二个请求  res.data['data']
+    // 第二个请求  res.data['data']
+    // 第二个请求  res.data['data']
+    // 第二个请求  res.data['data']
+    // 第二个请求  res.data['data']
+    // 第二个请求  res.data['data']
   }
 
   @override
