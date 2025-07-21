@@ -1,3 +1,6 @@
+import 'package:enjoy_plus_flutter_7/constants/index.dart';
+
 import '../utils/RequestDio.dart';
 
-getNotifyListAPI() => requestDio.get('/announcement');
+// 容易写错  基本不变  => 常量
+getNotifyListAPI() => requestDio.get(HTTP_PATH.HOME_NOTIFY_LIST);

@@ -5,3 +5,10 @@ class GlobalConstants {
   static const int TIME_OUT = 5;
   static const int CODE = 10000;
 }
+
+class HTTP_PATH {
+  static const String HOME_NOTIFY_LIST = '/announcement';
+}
+
+
+// const int money = 10000;
