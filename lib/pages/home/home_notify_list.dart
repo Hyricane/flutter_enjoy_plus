@@ -80,7 +80,10 @@ class _HomeNotifyListState extends State<HomeNotifyList> {
           ),
         ),
         onTap: () {
-          Navigator.pushNamed(context, '/notice_detail');
+          // 跳转传参 => flutter中怎么接
+          //
+          Navigator.pushNamed(context, '/notice_detail',
+              arguments: {'id': item['id']});
         },
       );
     }).toList();

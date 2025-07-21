@@ -18,6 +18,22 @@ class _NoticeDetailState extends State<NoticeDetail> {
     "creatorName": "传智教育"
   };
 
+  // 生命周期中获取命名路由传参
+
+  // Map<String, dynamic> getParams() {
+  //   return ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+  // }
+
+  // 外部传入的数据改变时自动调用 => 获取路由传参
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    var res =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    print(res['id']);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
