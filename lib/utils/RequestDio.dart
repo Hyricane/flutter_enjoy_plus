@@ -46,10 +46,32 @@ class RequestDio {
   }
 
   // 封装一个get 替代他的get
-  Future get(String path, {Map<String, dynamic>? params}) async {
+  Future get(String path,
+      {Map<String, dynamic>? params, Map<String, dynamic>? data}) async {
     // return _dio.get(path, queryParameters: params);
 
-    var res = await _dio.get(path, queryParameters: params);
+    var res = await _dio.get(path, queryParameters: params, data: data);
+    return _handleResponse(res);
+  }
+
+  // 封装一个 post 替代他的post
+  Future post(String path,
+      {Map<String, dynamic>? data, Map<String, dynamic>? params}) async {
+    var res = await _dio.post(path, data: data, queryParameters: params);
+    return _handleResponse(res);
+  }
+
+  // 封装一个 put 替代他的put
+  Future put(String path,
+      {Map<String, dynamic>? data, Map<String, dynamic>? params}) async {
+    var res = await _dio.put(path, data: data, queryParameters: params);
+    return _handleResponse(res);
+  }
+
+  // 封装一个 delete 替代他的delete
+  Future delete(String path,
+      {Map<String, dynamic>? params, Map<String, dynamic>? data}) async {
+    var res = await _dio.delete(path, queryParameters: params, data: data);
     return _handleResponse(res);
   }
 
