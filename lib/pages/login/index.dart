@@ -21,6 +21,13 @@ class _LoginPageState extends State<LoginPage> {
   // 标记是否在倒计时期间 默认不在倒计时
   bool flag = false;
 
+  // 彻底销毁的钩子 => 保证内存合理释放
+  @override
+  void dispose() {
+    super.dispose();
+    _timer?.cancel(); // 离开页面取消 倒计时
+  }
+
   void beginCountDown() {
     // 节流 保留第一次 用标记处理
     // 防抖 保留最后一次 用定时器处理 加延迟     关定时器 开定时器
