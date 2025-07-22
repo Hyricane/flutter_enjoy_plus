@@ -48,6 +48,7 @@ class HomeNav extends StatelessWidget {
           onTap: () async {
             // 测试首选项 持久化
             // 实例化
+            // 存token   获取token(很多地方都得验证token) => 封装
             final SharedPreferences pp = await SharedPreferences.getInstance();
             if (i == 0) {
               pp.setInt('money', 1000);

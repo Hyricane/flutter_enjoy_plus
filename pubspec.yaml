@@ -39,7 +39,10 @@ dependencies:
     git:
       url: https://gitcode.com/openharmony-sig/flutter_fluttertoast.git
   flutter_html: ^2.2.1
-  shared_preferences: ^2.2.2
+  shared_preferences:
+    git:
+      url: https://gitcode.com/openharmony-sig/flutter_packages.git
+      path: 'packages/shared_preferences/shared_preferences'
 
 dev_dependencies:
   flutter_test:
