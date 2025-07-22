@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../utils/PromptAction.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -47,6 +49,33 @@ class _LoginPageState extends State<LoginPage> {
     }
     // 60秒 点击获取验证码
     return Text('获取验证码');
+  }
+
+  void sendCode() {
+    // 验证
+    if (phoneController.text.isEmpty) {
+      // PromptAction.info('请输入手机号');
+      PromptAction.error('你输入一下手机号');
+      return;
+    }
+    //       /^1[3-9]\d{9}$/.test()
+    //       new RegExp()
+    // flutter 中 正则 RegExp(r'^1[3-9]\d{9}$')
+    if (!RegExp(r'^1[3-9]\d{9}$').hasMatch(phoneController.text)) {
+      PromptAction.error('手机号格式不正确');
+      return;
+    }
+
+    // 发请求
+    PromptAction.info('success');
+
+    // 倒计时
+
+    // if (!RegExp(r'^1[3-9]\d{9}$').hasMatch(phoneController.text)) {
+    //   // PromptAction.info('请输入正确的手机号');
+    //   PromptAction.error('请输入正确的手机号');
+    //   return;
+    // }
   }
 
   @override
@@ -106,8 +135,11 @@ class _LoginPageState extends State<LoginPage> {
                     minimumSize: const Size(100, 50),
                   ),
                   onPressed: () {
-                    // 倒计时开始
-                    beginCountDown();
+                    sendCode();
+                    // 0.验证手机号格式
+                    // 1.请求服务发短信
+                    // 2.倒计时
+                    // beginCountDown();
                   },
                   child: getTimeShow(),
                 ),
@@ -140,9 +172,13 @@ class _LoginPageState extends State<LoginPage> {
                       minimumSize: const Size(100, 50),
                     ),
                     onPressed: () {
-                      // 获取用户输入  控制器的text属性
-                      print(phoneController.text);
-                      print(codeController.text);
+                      // // 获取用户输入  控制器的text属性
+                      // print(phoneController.text);
+                      // print(codeController.text);
+
+                      // 验证手机号和验证码格式  正则
+                      // 请求
+                      // login()
                     },
                     child: const Text(
                       '登录',
