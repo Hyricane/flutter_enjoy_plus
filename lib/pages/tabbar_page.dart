@@ -1,4 +1,5 @@
 import 'package:enjoy_plus_flutter_7/pages/mine/mine_page.dart';
+import 'package:enjoy_plus_flutter_7/utils/TokenManager.dart';
 import 'package:flutter/material.dart';
 
 import 'home/home_page.dart';
@@ -25,6 +26,13 @@ class _TabbarPageState extends State<TabbarPage> {
       'activeIcon': 'assets/tabs/my_active.png'
     }
   ]; // 底部导航栏数据
+
+  @override
+  void initState() {
+    super.initState();
+    // 初始化token
+    tokenManager.initToken();
+  }
 
   int activeIndex = 0; // 默认选中的索引
 

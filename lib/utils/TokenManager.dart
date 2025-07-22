@@ -2,6 +2,9 @@ import 'package:enjoy_plus_flutter_7/constants/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TokenManager {
+  // 给当前类添加了一个私有属性
+  String? _token;
+
   // 获取实例
   _getInstance() async {
     final SharedPreferences pre = await SharedPreferences.getInstance();
@@ -11,20 +14,37 @@ class TokenManager {
   // 设置token
   Future<void> setToken(String token) async {
     final SharedPreferences pre = await _getInstance();
+    // 持久化
     pre.setString(GlobalConstants.TOKEN_KEY, token);
+    // 更新_token   后续通过getToken 获取_token
+    _token = token;
     // return '';
   }
 
-  // 获取token
-  Future<String> getToken() async {
+  // 获取token => 如何让一个异步变成同步(编程技巧)
+  // Future<String> getToken() async {
+  //   final SharedPreferences pre = await _getInstance();
+  //   return pre.getString(GlobalConstants.TOKEN_KEY) ?? '';
+  // }
+
+  // 初始化token => 项目一进入 必须初始化  tabbar_page
+  initToken() async {
     final SharedPreferences pre = await _getInstance();
-    return pre.getString(GlobalConstants.TOKEN_KEY) ?? '';
+    _token = pre.getString(GlobalConstants.TOKEN_KEY);
+  }
+
+  // 后续获取token 的公有方法
+  String getToken() {
+    return _token ?? '';
   }
 
   // 删除token
   Future<void> removeToken() async {
     final SharedPreferences pre = await _getInstance();
+    // 清空持久化
     pre.remove(GlobalConstants.TOKEN_KEY);
+    // 清空_token
+    _token = '';
   }
 }
 
