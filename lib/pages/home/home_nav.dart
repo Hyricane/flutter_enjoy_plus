@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../utils/PromptAction.dart';
+import '../../utils/TokenManager.dart';
 
 // 无状态组件 只是显示数据  不负责修改数据
 // 无状态组件 没有this.context 只能通过build传递context
@@ -46,17 +47,28 @@ class HomeNav extends StatelessWidget {
     for (int i = 0; i < navList.length; i++) {
       children.add(GestureDetector(
           onTap: () async {
+            if (i == 0) {
+              tokenManager.setToken('adshjfhkljsadhflkj');
+            }
+            if (i == 1) {
+              String token = await tokenManager.getToken();
+              print(token);
+            }
+            if (i == 2) {
+              tokenManager.removeToken();
+            }
+
             // 测试首选项 持久化
             // 实例化
             // 存token   获取token(很多地方都得验证token) => 封装
-            final SharedPreferences pp = await SharedPreferences.getInstance();
-            if (i == 0) {
-              pp.setInt('money', 1000);
-            } else if (i == 1) {
-              print(pp.getInt('money'));
-            } else {
-              pp.remove('money');
-            }
+            // final SharedPreferences pp = await SharedPreferences.getInstance();
+            // if (i == 0) {
+            //   pp.setInt('money', 1000);
+            // } else if (i == 1) {
+            //   print(pp.getInt('money'));
+            // } else {
+            //   pp.remove('money');
+            // }
 
             // showDialog(
             //     context: ctx,
