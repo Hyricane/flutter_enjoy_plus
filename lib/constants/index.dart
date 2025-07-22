@@ -10,6 +10,7 @@ class GlobalConstants {
 
 class HTTP_PATH {
   static const String HOME_NOTIFY_LIST = '/announcement';
+  static const String USER_SEND_CODE = '/code';
 }
 
 

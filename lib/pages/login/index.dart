@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:enjoy_plus_flutter_7/api/user.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/PromptAction.dart';
@@ -51,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
     return Text('获取验证码');
   }
 
-  void sendCode() {
+  void sendCode() async {
     // 验证
     if (phoneController.text.isEmpty) {
       // PromptAction.info('请输入手机号');
@@ -66,8 +67,12 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    // 发请求
-    PromptAction.info('success');
+    // 请求后端 发送验证码(整合三家运营商 电信移动联通)
+    // 实际开发 验证码不应该返回给客户端 不安全  容易被黑客截取 然后盗用身份进入一些重要的数据
+    // 学习环节才有的操作  后端强行将验证码返回给你了(不涉及重要数据)
+    var code = await sendCodeAPI({'mobile': phoneController.text});
+    PromptAction.info('验证码已发送 请查收');
+    print(code);
 
     // 倒计时
 
