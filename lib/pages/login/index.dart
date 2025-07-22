@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:enjoy_plus_flutter_7/api/user.dart';
+import 'package:enjoy_plus_flutter_7/utils/TokenManager.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/PromptAction.dart';
@@ -91,6 +92,40 @@ class _LoginPageState extends State<LoginPage> {
     //   PromptAction.error('请输入正确的手机号');
     //   return;
     // }
+  }
+
+  Future<void> login() async {
+    if (phoneController.text.isEmpty) {
+      PromptAction.info('请输入手机号');
+      return;
+    }
+    if (codeController.text.isEmpty) {
+      PromptAction.info('请输入验证码');
+      return;
+    }
+    // 手机号格式校验
+    if (!RegExp(r'^1[3-9]\d{9}$').hasMatch(phoneController.text)) {
+      PromptAction.info('请输入正确的手机号');
+      return;
+    }
+    // 验证码格式校验
+    if (!RegExp(r'^\d{6}$').hasMatch(codeController.text)) {
+      PromptAction.info('请输入正确的验证码');
+      return;
+    }
+
+    var res = await loginAPI(
+        {'mobile': phoneController.text, 'code': codeController.text});
+    print(res);
+
+    // 提示
+    PromptAction.sucess('登录成功');
+
+    // 存token
+    tokenManager.setToken(res['token']);
+
+    // 跳转
+    Navigator.pop(context);
   }
 
   @override
@@ -193,7 +228,7 @@ class _LoginPageState extends State<LoginPage> {
 
                       // 验证手机号和验证码格式  正则
                       // 请求
-                      // login()
+                      login();
                     },
                     child: const Text(
                       '登录',

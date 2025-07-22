@@ -7,3 +7,8 @@ import 'package:enjoy_plus_flutter_7/utils/RequestDio.dart';
 sendCodeAPI(Map<String, dynamic> params) {
   return requestDio.get(HTTP_PATH.USER_SEND_CODE, params: params);
 }
+
+// loginAPI({'mobile': '123123123', 'code': '123123'})
+loginAPI(Map<String, dynamic> data) {
+  return requestDio.post(HTTP_PATH.USER_LOGIN_CODE, data: data);
+}
