@@ -22,15 +22,21 @@ void main() {
     // 路由生成钩子 一旦发现这次要去的页面路由匹配不到  就会根据这个钩子生成对应的路由页面
     onGenerateRoute: (RouteSettings settings) {
       // 又是一个新来的保安  啥也不干
+      print(settings.name); // 跳转去的路由名
 
       // 分析: 判断有无token 有token就进去  没token就跳转到登录页面
       // tokenManager.getToken().then((value) => null)
       var token = tokenManager.getToken();
       if (token != '') {
         // 有token
-        return MaterialPageRoute(
-          builder: (context) => ProfilePage(),
-        );
+        // 判断一下用户要去的页面 然后跳转
+        if (settings.name == '/profile') {
+          return MaterialPageRoute(
+            builder: (context) => ProfilePage(),
+          );
+        } else {
+          return null;
+        }
       } else {
         // 没有token
         return MaterialPageRoute(
