@@ -41,10 +41,14 @@ class _MinePageState extends State<MinePage> {
         style: TextStyle(fontSize: 16, color: Colors.white),
       ),
       Spacer(), // Text().layoutWeight(1)  或者 Blank()
-      Text(
-        '去完善信息',
-        style: TextStyle(color: Colors.white),
-      ),
+      TextButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/profile');
+          },
+          child: Text(
+            '去完善信息',
+            style: TextStyle(color: Colors.white),
+          )),
       Icon(
         Icons.arrow_forward_ios,
         size: 14,
