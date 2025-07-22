@@ -118,6 +118,9 @@ class _LoginPageState extends State<LoginPage> {
         {'mobile': phoneController.text, 'code': codeController.text});
     print(res);
 
+    // 关闭倒计时
+    _timer?.cancel();
+
     // 提示
     PromptAction.sucess('登录成功');
 
