@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:enjoy_plus_flutter_7/pages/home/home_notify_list.dart';
@@ -16,6 +17,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List _notifyList = [];
+
+  // 倒计时变量
+  int _count = 60;
+  // timer变量
+  Timer? _timer;
 
   @override
   void initState() {
@@ -58,6 +64,27 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.transparent,
       ),
       body: ListView(padding: EdgeInsets.all(10), children: [
+        Row(
+          children: [
+            ElevatedButton(
+                onPressed: () {
+                  // 每隔一秒 _count--
+                  // 返回定时器本身
+                  _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+                    _count--;
+                    setState(() {});
+                  });
+                },
+                child: Text('开始')),
+            Text('还剩$_count秒'),
+            ElevatedButton(
+                onPressed: () {
+                  // 定时器
+                  _timer?.cancel();
+                },
+                child: Text('停止')),
+          ],
+        ),
         // 导航栏
         HomeNav(),
         // 单张图
