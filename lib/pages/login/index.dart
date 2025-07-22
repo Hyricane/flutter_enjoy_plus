@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -10,6 +12,33 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController codeController = TextEditingController();
+
+  Timer? _timer;
+  int _count = 6;
+
+  void beginCountDown() {
+    // 倒计时
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        _count--;
+      });
+      if (_count == 0) {
+        _timer?.cancel();
+
+        setState(() {
+          _count = 6;
+        });
+      }
+    });
+  }
+
+  Widget getTimeShow() {
+    if (_count < 6) {
+      return Text('$_count 秒后重新获取');
+    }
+    // 60秒 点击获取验证码
+    return Text('获取验证码');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,9 +97,10 @@ class _LoginPageState extends State<LoginPage> {
                     minimumSize: const Size(100, 50),
                   ),
                   onPressed: () {
-                    //
+                    // 倒计时开始
+                    beginCountDown();
                   },
-                  child: const Text('获取验证码'),
+                  child: getTimeShow(),
                 ),
               ],
             ),
