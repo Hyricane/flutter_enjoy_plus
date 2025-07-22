@@ -8,6 +8,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController codeController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,8 +49,11 @@ class _LoginPageState extends State<LoginPage> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Expanded(
+                Expanded(
+                  // flutter中输入框 没有双绑 => 取而代之的是 控制器
+                  // 获取用户输入
                   child: TextField(
+                    controller: phoneController,
                     decoration: InputDecoration(
                       labelText: '手机号',
                       hintText: '请输入手机号',
@@ -69,7 +75,8 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
             const SizedBox(height: 8),
-            const TextField(
+            TextField(
+              controller: codeController,
               decoration: InputDecoration(
                 labelText: '验证码',
                 hintText: '请输入6位验证码',
@@ -93,7 +100,11 @@ class _LoginPageState extends State<LoginPage> {
                       backgroundColor: const Color.fromARGB(255, 85, 145, 175),
                       minimumSize: const Size(100, 50),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      // 获取用户输入  控制器的text属性
+                      print(phoneController.text);
+                      print(codeController.text);
+                    },
                     child: const Text(
                       '登录',
                       style: TextStyle(
