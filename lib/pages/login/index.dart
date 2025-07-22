@@ -15,14 +15,23 @@ class _LoginPageState extends State<LoginPage> {
 
   Timer? _timer;
   int _count = 6;
+  // 标记是否在倒计时期间 默认不在倒计时
+  bool flag = false;
 
   void beginCountDown() {
+    // 节流 保留第一次 用标记处理
+    // 防抖 保留最后一次 用定时器处理 加延迟     关定时器 开定时器
+    if (flag) return;
+
+    flag = true;
+
     // 倒计时
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         _count--;
       });
       if (_count == 0) {
+        flag = false;
         _timer?.cancel();
 
         setState(() {
