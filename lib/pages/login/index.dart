@@ -24,9 +24,9 @@ class _LoginPageState extends State<LoginPage> {
   void beginCountDown() {
     // 节流 保留第一次 用标记处理
     // 防抖 保留最后一次 用定时器处理 加延迟     关定时器 开定时器
-    if (flag) return;
+    // if (flag) return;
 
-    flag = true;
+    // flag = true;
 
     // 倒计时
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -53,6 +53,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void sendCode() async {
+    if (flag) return;
+    flag = true;
     // 验证
     if (phoneController.text.isEmpty) {
       // PromptAction.info('请输入手机号');
@@ -74,7 +76,8 @@ class _LoginPageState extends State<LoginPage> {
     PromptAction.info('验证码已发送 请查收');
     print(code);
 
-    // 倒计时
+    // 倒计时(防止用户疯狂点击)
+    beginCountDown();
 
     // if (!RegExp(r'^1[3-9]\d{9}$').hasMatch(phoneController.text)) {
     //   // PromptAction.info('请输入正确的手机号');
