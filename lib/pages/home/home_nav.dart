@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../utils/PromptAction.dart';
 
@@ -44,7 +45,18 @@ class HomeNav extends StatelessWidget {
     List<Widget> children = [];
     for (int i = 0; i < navList.length; i++) {
       children.add(GestureDetector(
-          onTap: () {
+          onTap: () async {
+            // 测试首选项 持久化
+            // 实例化
+            final SharedPreferences pp = await SharedPreferences.getInstance();
+            if (i == 0) {
+              pp.setInt('money', 1000);
+            } else if (i == 1) {
+              print(pp.getInt('money'));
+            } else {
+              pp.remove('money');
+            }
+
             // showDialog(
             //     context: ctx,
             //     builder: (ctx) => AlertDialog(
