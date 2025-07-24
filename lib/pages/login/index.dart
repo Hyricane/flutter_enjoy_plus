@@ -61,8 +61,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void sendCode() async {
-    if (flag) return;
-    flag = true;
     // 验证
     if (phoneController.text.isEmpty) {
       // PromptAction.info('请输入手机号');
@@ -77,6 +75,8 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
+    if (flag) return;
+    flag = true;
     // 请求后端 发送验证码(整合三家运营商 电信移动联通)
     // 实际开发 验证码不应该返回给客户端 不安全  容易被黑客截取 然后盗用身份进入一些重要的数据
     // 学习环节才有的操作  后端强行将验证码返回给你了(不涉及重要数据)
