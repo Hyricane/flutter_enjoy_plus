@@ -62,7 +62,7 @@ class _TabbarPageState extends State<TabbarPage> {
     return Scaffold(
       body: IndexedStack(
         index: activeIndex,
-        children: [HomePage(), MinePage()],
+        children: [HomePage(), MinePage(activeIndex: activeIndex)],
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

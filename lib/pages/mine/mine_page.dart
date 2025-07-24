@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../../api/user.dart';
 
 class MinePage extends StatefulWidget {
-  const MinePage({Key? key}) : super(key: key);
+  const MinePage({Key? key, required this.activeIndex}) : super(key: key);
+
+  final int activeIndex;
 
   @override
   _MinePageState createState() => _MinePageState();
@@ -88,11 +90,36 @@ class _MinePageState extends State<MinePage> {
   }
 
   // initState中调用getUserInfoAPI请求我的信息
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // 获取我的信息  widget.activeIndex == 1
+  //   if (widget.activeIndex == 1) {
+  //     print('该我上请求了...');
+  //     // getUserInfo();
+  //   }
+  // }
+
+  // 接受路由参数 didChangeDependencies
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   // 获取我的信息  widget.activeIndex == 1
+  //   if (widget.activeIndex == 1) {
+  //     print('该我上请求了...');
+  //     // getUserInfo();
+  //   }
+  // }
+
+  // 父组件activeIndex改变时  请求我的信息
   @override
-  void initState() {
-    super.initState();
-    // 获取我的信息
-    getUserInfo();
+  void didUpdateWidget(covariant MinePage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // 获取我的信息  widget.activeIndex == 1
+    if (widget.activeIndex == 1) {
+      // print('该我上请求了...');
+      getUserInfo();
+    }
   }
 
   getUserInfo() async {
