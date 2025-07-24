@@ -1,15 +1,19 @@
 import 'dart:io';
 
 import 'package:enjoy_plus_flutter_7/utils/EventBus.dart';
+import 'package:enjoy_plus_flutter_7/utils/TokenManager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../api/user.dart';
 
 class MinePage extends StatefulWidget {
-  const MinePage({Key? key, required this.activeIndex}) : super(key: key);
+  const MinePage(
+      {Key? key, required this.activeIndex, required this.setActiveIndex})
+      : super(key: key);
 
   final int activeIndex;
+  final Function(int) setActiveIndex;
 
   @override
   _MinePageState createState() => _MinePageState();
@@ -207,7 +211,39 @@ class _MinePageState extends State<MinePage> {
             child: Column(
               children: _getColumnChildren(),
             ),
-          )
+          ),
+          TextButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext ctx) {
+                      return AlertDialog(
+                        title: Text("提示"),
+                        content: Text("确定退出登录吗？"),
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                // flutter 中弹窗 也是属于"页面"组件
+                                Navigator.pop(context);
+                                // Navigator.of(context).pop();
+                              },
+                              child: Text("取消")),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                tokenManager.removeToken();
+                                // 去首页
+                                widget.setActiveIndex(0);
+                              },
+                              child: Text("确认")),
+                        ],
+                      );
+                    });
+              },
+              child: Text(
+                "退出",
+                style: TextStyle(color: Colors.white),
+              ))
         ],
       ),
     );

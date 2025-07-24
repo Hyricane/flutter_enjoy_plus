@@ -72,12 +72,20 @@ class _TabbarPageState extends State<TabbarPage> {
     return list;
   } // 创建底部导航栏
 
+  void setActiveIndex(int index) {
+    activeIndex = index;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
         index: activeIndex,
-        children: [HomePage(), MinePage(activeIndex: activeIndex)],
+        children: [
+          HomePage(),
+          MinePage(activeIndex: activeIndex, setActiveIndex: setActiveIndex)
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
