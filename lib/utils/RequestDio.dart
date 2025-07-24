@@ -68,9 +68,11 @@ class RequestDio {
         if (exception.response?.statusCode == 401) {
           // 清空token
           tokenManager.removeToken();
-          // 跳转到登录页面  无法跳转 一会处理
+          // flutter 的三方库有一个发布订阅叫eventbus
+          // 下载 使用
+          // 跳转到登录页面  无法跳转 一会处理 => emitter  发布订阅模式  eventhub   eventbus
           // Navigator.pu
-          //提示重新登录
+          // 提示重新登录
           PromptAction.error('token过期请重新登录');
         }
 

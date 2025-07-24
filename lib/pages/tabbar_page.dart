@@ -2,6 +2,7 @@ import 'package:enjoy_plus_flutter_7/pages/mine/mine_page.dart';
 import 'package:enjoy_plus_flutter_7/utils/TokenManager.dart';
 import 'package:flutter/material.dart';
 
+import '../utils/EventBus.dart';
 import 'home/home_page.dart';
 
 class TabbarPage extends StatefulWidget {
@@ -32,6 +33,13 @@ class _TabbarPageState extends State<TabbarPage> {
     super.initState();
     // 初始化token
     tokenManager.initToken();
+
+    // 订阅一个吃饭事件
+    eventBus.on<EatEvent>().listen((event) {
+      print('我该吃了...');
+    });
+
+    // eventBus.fire(EatEvent()); // 需要一个具体类型的事件实例
   }
 
   int activeIndex = 0; // 默认选中的索引

@@ -1,3 +1,4 @@
+import 'package:enjoy_plus_flutter_7/utils/EventBus.dart';
 import 'package:flutter/material.dart';
 
 import '../../api/user.dart';
@@ -65,25 +66,30 @@ class _MinePageState extends State<MinePage> {
 
   List<Widget> _getColumnChildren() {
     return menuList.map((item) {
-      return SizedBox(
-        height: 50,
-        child: Row(
-          children: [
-            Image.asset(
-              item['icon'],
-              width: 20,
-            ),
-            SizedBox(width: 10),
-            Text(
-              item['title'],
-              style: TextStyle(fontSize: 16, color: Colors.black),
-            ),
-            Spacer(),
-            Icon(
-              Icons.arrow_forward_ios,
-              size: 14,
-            )
-          ],
+      return GestureDetector(
+        onTap: () {
+          eventBus.fire(EatEvent());
+        },
+        child: SizedBox(
+          height: 50,
+          child: Row(
+            children: [
+              Image.asset(
+                item['icon'],
+                width: 20,
+              ),
+              SizedBox(width: 10),
+              Text(
+                item['title'],
+                style: TextStyle(fontSize: 16, color: Colors.black),
+              ),
+              Spacer(),
+              Icon(
+                Icons.arrow_forward_ios,
+                size: 14,
+              )
+            ],
+          ),
         ),
       );
     }).toList();
