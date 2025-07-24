@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class TokenManager {
   // 给当前类添加了一个私有属性
   String? _token;
+  // 添加一个刷新token属性
+  String? _refreshToken;
 
   // 获取实例
   _getInstance() async {
@@ -12,12 +14,17 @@ class TokenManager {
   }
 
   // 设置token
-  Future<void> setToken(String token) async {
+  Future<void> setToken(String token, {String? refreshToken}) async {
     final SharedPreferences pre = await _getInstance();
     // 持久化
     pre.setString(GlobalConstants.TOKEN_KEY, token);
     // 更新_token   后续通过getToken 获取_token
     _token = token;
+
+    if (refreshToken != null) {
+      pre.setString(GlobalConstants.REFRESH_TOKEN_KEY, refreshToken);
+      _refreshToken = refreshToken;
+    }
     // return '';
   }
 
@@ -31,11 +38,16 @@ class TokenManager {
   initToken() async {
     final SharedPreferences pre = await _getInstance();
     _token = pre.getString(GlobalConstants.TOKEN_KEY);
+    _refreshToken = pre.getString(GlobalConstants.REFRESH_TOKEN_KEY);
   }
 
   // 后续获取token 的公有方法
   String getToken() {
     return _token ?? '';
+  }
+
+  String getRefreshToken() {
+    return _refreshToken ?? '';
   }
 
   // 删除token
@@ -45,6 +57,8 @@ class TokenManager {
     pre.remove(GlobalConstants.TOKEN_KEY);
     // 清空_token
     _token = '';
+    pre.remove(GlobalConstants.REFRESH_TOKEN_KEY);
+    _refreshToken = '';
   }
 }
 

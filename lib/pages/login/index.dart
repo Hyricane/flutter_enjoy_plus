@@ -125,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
     PromptAction.sucess('登录成功');
 
     // 存token
-    tokenManager.setToken(res['token']);
+    tokenManager.setToken(res['token'], refreshToken: res['refreshToken']);
 
     // 跳转
     Navigator.pop(context);

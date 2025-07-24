@@ -6,6 +6,8 @@ class GlobalConstants {
   static const int CODE = 10000;
   // token存储键
   static const String TOKEN_KEY = 'enjoy_plus_token';
+  // 刷新token存储的键
+  static const String REFRESH_TOKEN_KEY = 'enjoy_plus_refresh_token';
 }
 
 class HTTP_PATH {
