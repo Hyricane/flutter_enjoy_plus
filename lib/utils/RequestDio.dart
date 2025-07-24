@@ -61,6 +61,19 @@ class RequestDio {
       },
       // 添加一个错误拦截器  exception异常对象 {}   handler处理函数对象   =>  必须放行
       onError: (DioException exception, ErrorInterceptorHandler handler) {
+        // print('我错了...');
+        // print(exception.response?.statusCode);
+        // 401   404   500
+        // 判断exception.response?.statusCode是否为401 如果是401 利用tokenManager清空token
+        if (exception.response?.statusCode == 401) {
+          // 清空token
+          tokenManager.removeToken();
+          // 跳转到登录页面  无法跳转 一会处理
+          // Navigator.pu
+          //提示重新登录
+          PromptAction.error('token过期请重新登录');
+        }
+
         handler.next(exception);
       },
     ));
