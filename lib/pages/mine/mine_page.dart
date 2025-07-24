@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:enjoy_plus_flutter_7/utils/EventBus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../api/user.dart';
@@ -13,6 +16,13 @@ class MinePage extends StatefulWidget {
 }
 
 class _MinePageState extends State<MinePage> {
+  // 定义一个用户信息map对象 有avatar nickName id
+  Map<String, dynamic> userInfo = {
+    'avatar': '',
+    'nickName': '',
+    'id': '',
+  };
+
   // 菜单数据
   final List menuList = [
     {
@@ -29,20 +39,37 @@ class _MinePageState extends State<MinePage> {
     }
   ];
 
+  Widget getImageWidget() {
+    // kIsWeb 标识运行平台是否在web
+    if (!kIsWeb && (userInfo['avatar'] as String).startsWith('/data')) {
+      // 鸿蒙图片
+      return Image.file(
+        File(userInfo['avatar']),
+        width: 50,
+        height: 50,
+      );
+    }
+    // 默认本地图
+    return Image.asset(
+      'assets/images/avatar_1.jpg',
+      width: 50,
+      height: 50,
+    );
+  }
+
   List<Widget> _getRowChildren() {
     return [
       ClipRRect(
         borderRadius: BorderRadius.circular(100), // 50/2=25
-        child: Image.asset(
-          'assets/images/avatar_1.jpg',
-          fit: BoxFit.cover,
-          width: 50,
-          height: 50,
-        ),
+        // 头像分为以下几种情况:
+        // 1. 本地图片     Image.asset
+        // 2. 鸿蒙系统中的图片 /data开头    Image.file
+        // 3. 网络图片 http开头     Image.network
+        child: getImageWidget(),
       ),
       SizedBox(width: 10),
       Text(
-        '张三',
+        userInfo['nickName'] ?? "游客",
         style: TextStyle(fontSize: 16, color: Colors.white),
       ),
       Spacer(), // Text().layoutWeight(1)  或者 Blank()
@@ -141,8 +168,9 @@ class _MinePageState extends State<MinePage> {
   }
 
   getUserInfo() async {
-    final res = await getUserInfoAPI();
-    print(res);
+    userInfo = await getUserInfoAPI();
+    // print(res);
+    setState(() {});
   }
 
   @override
