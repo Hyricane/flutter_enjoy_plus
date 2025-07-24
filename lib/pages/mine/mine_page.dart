@@ -168,7 +168,8 @@ class _MinePageState extends State<MinePage> {
   }
 
   getUserInfo() async {
-    userInfo = await getUserInfoAPI();
+    userInfo = await getUserInfoAPI(); // 这个请求401 所以你的数据没了 所以你的UI炸了
+    // => 这次请求后的结果 你想扭转回来 让它成为一个成功的promise/Future
     print(userInfo);
     setState(() {});
   }

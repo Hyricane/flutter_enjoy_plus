@@ -104,6 +104,24 @@ class RequestDio {
             bool isOk = await _refreshToken(); // 刷新token的成功与否
             if (isOk) {
               // 刷新成功!!!
+
+              // 重新发之前错的请求 => 用户"无感"
+              // exception.requestOptions; // 错误请求的相关配置(请求方式  请求参数  请求地址)
+              // _dio.get(exception.requestOptions;) // _dio可以用了  已经刷新token了
+              // _dio.fetch 通用请求
+              // 请求毕竟是401  也就意味着 这个请求 是个失败的future
+              // handler.resolve(response)
+              // 请求重新发
+              // 页面中要的是结果
+              // 返回 => 打断他 next
+              // return await _dio.fetch(exception.requestOptions); // _dio可以用了  已经刷新token了
+              //  return;
+
+              // 将重新发送的请求 的成功结果  包装成一个成功的promise  返回给页面
+              var newRes = await _dio.fetch(exception.requestOptions);
+              return handler.resolve(newRes); // Promise.resolve()
+
+              // _dio.fetch(RequestOptions());   axios({method: 'get',})   axios.get('xxxx')  axios.post
             } else {
               // 刷新失败
               // 无refreshToken
@@ -141,7 +159,7 @@ class RequestDio {
           // PromptAction.error('token过期请重新登录');
         }
 
-        handler.next(exception);
+        handler.next(exception); // 带着这个异常往下执行 然后数据就传回页面了
       },
     ));
   }
