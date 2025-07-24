@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:enjoy_plus_flutter_7/constants/index.dart';
+import 'package:enjoy_plus_flutter_7/utils/EventBus.dart';
 import 'package:enjoy_plus_flutter_7/utils/PromptAction.dart';
 import 'package:enjoy_plus_flutter_7/utils/TokenManager.dart';
 
@@ -71,6 +72,7 @@ class RequestDio {
           // flutter 的三方库有一个发布订阅叫eventbus
           // 下载 使用
           // 跳转到登录页面  无法跳转 一会处理 => emitter  发布订阅模式  eventhub   eventbus
+          eventBus.fire(LogoutEvent()); // login   logout
           // Navigator.pu
           // 提示重新登录
           PromptAction.error('token过期请重新登录');

@@ -35,8 +35,15 @@ class _TabbarPageState extends State<TabbarPage> {
     tokenManager.initToken();
 
     // 订阅一个吃饭事件
-    eventBus.on<EatEvent>().listen((event) {
-      print('我该吃了...');
+    // eventBus.on().listen((event) {
+    //   print('我该吃了...');
+    // });
+    // eventBus.on<EatEvent>().listen((event) {
+    //   print('我该吃了...');
+    // });
+    eventBus.on<LogoutEvent>().listen((event) {
+      // print('我该登录了...');
+      Navigator.pushNamed(context, '/login');
     });
 
     // eventBus.fire(EatEvent()); // 需要一个具体类型的事件实例

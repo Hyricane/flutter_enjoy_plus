@@ -8,10 +8,15 @@ class EatEvent {
   String message = 'eat';
 }
 
+class LogoutEvent {
+  final String message = "logout";
+}
+
 // EventBus如何使用
 // 订阅
-// eventBus.on<Event>().listen((event) {
+// eventBus.on<EatEvent>().listen((event) {
 //   // 监听
 // });
 // 发布一个具体的事件  
-// eventBus.fire();
+// eventBus.fire(EatEvent());
+// eventBus.fire(SleepEvent());
