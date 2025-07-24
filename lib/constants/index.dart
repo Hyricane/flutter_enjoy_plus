@@ -16,6 +16,8 @@ class HTTP_PATH {
   static const String USER_LOGIN_CODE = '/login';
   // 请求我的信息的路径
   static const String USER_INFO = '/userInfo';
+  // 刷新token的接口路径
+  static const String USER_REFRESH_TOKEN = '/refreshToken';
 }
 
 

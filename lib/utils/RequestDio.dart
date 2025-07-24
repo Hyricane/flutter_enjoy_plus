@@ -26,6 +26,36 @@ class RequestDio {
     _setInterceptors();
   }
 
+  // 请求刷新token
+  Future<bool> _refreshToken() async {
+    try {
+      // 不能再用_dio请求了  里面存的是过期的token
+      // return _dio.post(
+      //   HTTP_PATH.USER_REFRESH_TOKEN,
+      // );
+      String refreshToken = tokenManager.getRefreshToken();
+
+      Dio dio = Dio(); // 创建一个新的dio实例请求
+      var res = await dio.post(
+          GlobalConstants.BASE_URL + HTTP_PATH.USER_REFRESH_TOKEN,
+          options: Options(headers: {'Authorization': 'Bearer $refreshToken'}));
+
+      if (res.data['code'] == GlobalConstants.CODE) {
+        // 刷新token成功!!!!
+        tokenManager.setToken(res.data['data']['token'],
+            refreshToken: res.data['data']['refreshToken']);
+        return true;
+      } else {
+        // 刷新token失败!!!!
+        return false;
+      }
+      // 后端返回的数据
+    } catch (e) {
+      // 刷新token失败!!!!
+      return false;
+    }
+  }
+
   // 配置拦截器
   _setInterceptors() {
     _dio.interceptors.add(InterceptorsWrapper(
@@ -61,21 +91,54 @@ class RequestDio {
         }
       },
       // 添加一个错误拦截器  exception异常对象 {}   handler处理函数对象   =>  必须放行
-      onError: (DioException exception, ErrorInterceptorHandler handler) {
+      onError: (DioException exception, ErrorInterceptorHandler handler) async {
         // print('我错了...');
         // print(exception.response?.statusCode);
         // 401   404   500
         // 判断exception.response?.statusCode是否为401 如果是401 利用tokenManager清空token
         if (exception.response?.statusCode == 401) {
-          // 清空token
-          tokenManager.removeToken();
-          // flutter 的三方库有一个发布订阅叫eventbus
-          // 下载 使用
-          // 跳转到登录页面  无法跳转 一会处理 => emitter  发布订阅模式  eventhub   eventbus
-          eventBus.fire(LogoutEvent()); // login   logout
-          // Navigator.pu
-          // 提示重新登录
-          PromptAction.error('token过期请重新登录');
+          // 一旦发现401 先看看refreshToken
+          var refreshToken = tokenManager.getRefreshToken();
+          if (refreshToken != '') {
+            // 有refreshToken => 请求后端刷新token(封装函数)
+            bool isOk = await _refreshToken(); // 刷新token的成功与否
+            if (isOk) {
+              // 刷新成功!!!
+            } else {
+              // 刷新失败
+              // 无refreshToken
+              // 清空token
+              tokenManager.removeToken();
+              // flutter 的三方库有一个发布订阅叫eventbus
+              // 下载 使用
+              // 跳转到登录页面  无法跳转 一会处理 => emitter  发布订阅模式  eventhub   eventbus
+              eventBus.fire(LogoutEvent()); // login   logout
+              // Navigator.pu
+              // 提示重新登录
+              PromptAction.error('token过期请重新登录');
+            }
+          } else {
+            // 无refreshToken
+            // 清空token
+            tokenManager.removeToken();
+            // flutter 的三方库有一个发布订阅叫eventbus
+            // 下载 使用
+            // 跳转到登录页面  无法跳转 一会处理 => emitter  发布订阅模式  eventhub   eventbus
+            eventBus.fire(LogoutEvent()); // login   logout
+            // Navigator.pu
+            // 提示重新登录
+            PromptAction.error('token过期请重新登录');
+          }
+
+          // // 清空token
+          // tokenManager.removeToken();
+          // // flutter 的三方库有一个发布订阅叫eventbus
+          // // 下载 使用
+          // // 跳转到登录页面  无法跳转 一会处理 => emitter  发布订阅模式  eventhub   eventbus
+          // eventBus.fire(LogoutEvent()); // login   logout
+          // // Navigator.pu
+          // // 提示重新登录
+          // PromptAction.error('token过期请重新登录');
         }
 
         handler.next(exception);
