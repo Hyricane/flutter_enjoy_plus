@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../api/user.dart';
+
 class MinePage extends StatefulWidget {
   const MinePage({Key? key}) : super(key: key);
 
@@ -83,6 +85,19 @@ class _MinePageState extends State<MinePage> {
         ),
       );
     }).toList();
+  }
+
+  // initState中调用getUserInfoAPI请求我的信息
+  @override
+  void initState() {
+    super.initState();
+    // 获取我的信息
+    getUserInfo();
+  }
+
+  getUserInfo() async {
+    final res = await getUserInfoAPI();
+    print(res);
   }
 
   @override

@@ -12,3 +12,8 @@ sendCodeAPI(Map<String, dynamic> params) {
 loginAPI(Map<String, dynamic> data) {
   return requestDio.post(HTTP_PATH.USER_LOGIN_CODE, data: data);
 }
+
+// 封装一个请求我的信息的API接口函数
+getUserInfoAPI() {
+  return requestDio.get(HTTP_PATH.USER_INFO);
+}
