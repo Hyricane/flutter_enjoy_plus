@@ -4,6 +4,7 @@ import 'package:enjoy_plus_flutter_7/api/user.dart';
 import 'package:enjoy_plus_flutter_7/utils/TokenManager.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/EventBus.dart';
 import '../../utils/PromptAction.dart';
 
 class LoginPage extends StatefulWidget {
@@ -123,6 +124,9 @@ class _LoginPageState extends State<LoginPage> {
 
     // 提示
     PromptAction.sucess('登录成功');
+
+    // 通知我的页面 重新获取用户信息
+    eventBus.fire(LogSuccessEvent());
 
     // 存token
     tokenManager.setToken(res['token'], refreshToken: res['refreshToken']);

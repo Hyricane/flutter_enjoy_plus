@@ -95,6 +95,18 @@ class _MinePageState extends State<MinePage> {
     }).toList();
   }
 
+  @override
+  void initState() {
+    super.initState();
+    // 订阅登录成功事件  一旦登录成功 重新获取用户信息
+    eventBus.on<LogSuccessEvent>().listen((event) {
+      // event就是当初fire发射的事件实例
+      // print(event.info);
+      // print('我监听到了登录成功事件');
+      getUserInfo();
+    });
+  }
+
   // initState中调用getUserInfoAPI请求我的信息
   // @override
   // void initState() {

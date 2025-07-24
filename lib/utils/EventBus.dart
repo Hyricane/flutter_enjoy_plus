@@ -12,6 +12,10 @@ class LogoutEvent {
   final String message = "logout";
 }
 
+class LogSuccessEvent {
+  final String info = "logsuccess";
+}
+
 // EventBus如何使用
 // 订阅
 // eventBus.on<EatEvent>().listen((event) {
