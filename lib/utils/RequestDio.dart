@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:enjoy_plus_flutter_7/constants/index.dart';
 import 'package:enjoy_plus_flutter_7/utils/PromptAction.dart';
+import 'package:enjoy_plus_flutter_7/utils/TokenManager.dart';
 
 class RequestDio {
   // 不暴露给外部用  用它发请求麻烦
@@ -31,6 +32,12 @@ class RequestDio {
       // 触发时机:  请求到服务器之前 先走这个函数逻辑 然后再发出  =>  必须放行
       onRequest: (RequestOptions options, RequestInterceptorHandler handler) {
         // 为了保证后续逻辑正常执行  必须放行
+        String token = tokenManager.getToken(); // ''
+        if (token != '') {
+          // 添加请求头
+          options.headers['Authorization'] = 'Bearer $token';
+          // options.headers['a'] = 'b';
+        }
         handler.next(options); // 继续往后走逻辑
       },
       // 添加一个响应拦截器  response响应数据对象 {}   handler处理函数对象   =>  必须放行
