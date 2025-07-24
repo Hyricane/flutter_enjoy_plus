@@ -41,10 +41,10 @@ class _MinePageState extends State<MinePage> {
 
   Widget getImageWidget() {
     // kIsWeb 标识运行平台是否在web
-    if (!kIsWeb && (userInfo['avatar'] as String).startsWith('/data')) {
+    if (userInfo['avatar'] != '') {
       // 鸿蒙图片
-      return Image.file(
-        File(userInfo['avatar']),
+      return Image.network(
+        userInfo['avatar'],
         width: 50,
         height: 50,
       );
@@ -169,7 +169,7 @@ class _MinePageState extends State<MinePage> {
 
   getUserInfo() async {
     userInfo = await getUserInfoAPI();
-    // print(res);
+    print(userInfo);
     setState(() {});
   }
 
