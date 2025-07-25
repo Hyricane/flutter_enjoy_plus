@@ -47,7 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
   // 15012345678  我用了
   Widget _getAvatarWidget() {
     if (widget.userInfo['avatar'] != null && widget.userInfo['avatar'] != '') {
-      if (widget.userInfo['avatar'].startsWith('/data')) {
+      if ((widget.userInfo['avatar'] as String).startsWith('/data')) {
         return Image.file(
           File(widget.userInfo['avatar']),
           width: 30,
@@ -184,27 +184,32 @@ class _ProfilePageState extends State<ProfilePage> {
                                             //     file.path; // 选中照片的临时路径
                                             // setState(() {});
                                             // Navigator.pop(context);
-                                            if (kIsWeb) {
-                                              var res =
-                                                  await uploadAvatarAPI(file);
-                                              print(res);
-                                              widget.userInfo['avatar'] =
-                                                  res['url']; // 上传后的服务中的图片路径
-                                              setState(() {});
-                                              Navigator.pop(context);
+                                            // if (kIsWeb) {
+                                            // 鸿蒙端的代码大部分和web雷同 少部分调整
+                                            // try {
+                                            var res =
+                                                await uploadAvatarAPI(file);
+                                            print(res);
+                                            widget.userInfo['avatar'] =
+                                                res['url']; // 上传后的服务中的图片路径
+                                            setState(() {});
+                                            Navigator.pop(context);
 
-                                              PromptAction.sucess('上传成功');
-                                              eventBus.fire(LogSuccessEvent());
+                                            PromptAction.sucess('上传成功');
+                                            eventBus.fire(LogSuccessEvent());
+                                            // } catch (e) {
+                                            //   print(e.toString());
+                                            // }
 
-                                              // 请求服务器上传
-                                            } else {
-                                              print(file.path); // 临时展示一下
-                                              widget.userInfo['avatar'] =
-                                                  file.path;
-                                              setState(() {});
-                                              // 关闭弹窗
-                                              Navigator.of(context).pop();
-                                            }
+                                            // 请求服务器上传
+                                            // } else {
+                                            //   print(file.path); // 临时展示一下
+                                            //   widget.userInfo['avatar'] =
+                                            //       file.path;
+                                            //   setState(() {});
+                                            //   // 关闭弹窗
+                                            //   Navigator.of(context).pop();
+                                            // }
                                           }
                                         },
                                         child: Row(
@@ -264,7 +269,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           Row(
             children: [
-              Text(widget.userInfo['nickName']),
+              Text('昵称'),
               Spacer(),
               Expanded(
                 child: TextField(

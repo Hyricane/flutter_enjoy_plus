@@ -3,6 +3,7 @@
 import 'package:dio/dio.dart';
 import 'package:enjoy_plus_flutter_7/constants/index.dart';
 import 'package:enjoy_plus_flutter_7/utils/RequestDio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 
 // sendCodeAPI({'mobile': '123123123'})
@@ -31,11 +32,16 @@ uploadAvatarAPI(XFile file) async {
   // flutter中如何创建formdata实例
   FormData formData = FormData.fromMap({
     // flutter中如何将文件转二进制
-    'file': MultipartFile.fromBytes(
-      await file.readAsBytes(), // 获取文件二进制数据-u8array-比arraybuffer更好操作
-      filename: file.name, // 文件名
-      contentType: DioMediaType('image', 'jpg'),
-    ),
+    'file': kIsWeb
+        ? MultipartFile.fromBytes(
+            await file.readAsBytes(), // 获取文件二进制数据-u8array-比arraybuffer更好操作
+            filename: file.name, // 文件名
+            contentType: DioMediaType('image', 'jpg'),
+          )
+        : MultipartFile.fromFileSync(
+            file.path, filename: file.name, // 文件名
+            contentType: DioMediaType('image', 'jpg'),
+          ), // flutter 3.7版本   模拟器版本
     'type': 'avatar',
   });
 
