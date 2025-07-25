@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:enjoy_plus_flutter_7/utils/EventBus.dart';
 import 'package:enjoy_plus_flutter_7/utils/PromptAction.dart';
 import 'package:flutter/foundation.dart';
@@ -45,6 +47,13 @@ class _ProfilePageState extends State<ProfilePage> {
   // 15012345678  我用了
   Widget _getAvatarWidget() {
     if (widget.userInfo['avatar'] != null && widget.userInfo['avatar'] != '') {
+      if (widget.userInfo['avatar'].startsWith('/data')) {
+        return Image.file(
+          File(widget.userInfo['avatar']),
+          width: 30,
+          height: 30,
+        );
+      }
       return Image.network(
         widget.userInfo['avatar'],
         width: 30,
@@ -190,6 +199,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                               // 请求服务器上传
                                             } else {
                                               print(file.path); // 临时展示一下
+                                              widget.userInfo['avatar'] =
+                                                  file.path;
+                                              setState(() {});
+                                              // 关闭弹窗
+                                              Navigator.of(context).pop();
                                             }
                                           }
                                         },
