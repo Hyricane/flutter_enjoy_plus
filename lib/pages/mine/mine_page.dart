@@ -45,7 +45,8 @@ class _MinePageState extends State<MinePage> {
 
   Widget getImageWidget() {
     // kIsWeb 标识运行平台是否在web
-    if (userInfo['avatar'] != '') {
+    // {avatar: null, id: 7181970497892352, nickName: null}
+    if (userInfo['avatar'] != '' && userInfo['avatar'] != null) {
       // 鸿蒙图片
       return Image.network(
         userInfo['avatar'],
@@ -73,7 +74,9 @@ class _MinePageState extends State<MinePage> {
       ),
       SizedBox(width: 10),
       Text(
-        userInfo['nickName'] ?? "游客",
+        userInfo['nickName'] != '' && userInfo['nickName'] != null
+            ? userInfo['nickName']
+            : "游客",
         style: TextStyle(fontSize: 16, color: Colors.white),
       ),
       Spacer(), // Text().layoutWeight(1)  或者 Blank()
