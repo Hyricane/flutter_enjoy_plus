@@ -76,9 +76,98 @@ class _ProfilePageState extends State<ProfilePage> {
                 const Spacer(),
                 Row(
                   children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(50.0),
-                      child: _getAvatarWidget(),
+                    GestureDetector(
+                      onTap: () {
+                        // 底部弹出半模态
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (BuildContext ctx) {
+                              return Container(
+                                width: double.infinity,
+                                height: 180,
+                                decoration: BoxDecoration(
+                                  // 设置左上圆角20  右上圆角20
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20),
+                                  ),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: 60,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        // 设置下边框
+                                        border: Border(
+                                          bottom: BorderSide(
+                                              color: Colors.black, width: 0.5),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          // 相机的图标
+                                          Icon(Icons.camera_alt),
+                                          // 加点间距
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                          Text('拍照'),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 60,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        // 设置下边框
+                                        border: Border(
+                                          bottom: BorderSide(
+                                              color: Colors.black, width: 0.5),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          // 相册的图标
+                                          Icon(Icons.photo),
+                                          // 加点间距
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                          Text('相册'),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 60,
+                                      width: double.infinity,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          // 取消的图标
+                                          Icon(Icons.cancel),
+                                          // 加点间距
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                          Text('取消'),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              );
+                            });
+                      },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(50.0),
+                        child: _getAvatarWidget(),
+                      ),
                     ),
                     const Icon(Icons.arrow_forward_ios, size: 12)
                   ],
