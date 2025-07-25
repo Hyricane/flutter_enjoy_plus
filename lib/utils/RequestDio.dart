@@ -180,6 +180,13 @@ class RequestDio {
     return _handleResponse(res);
   }
 
+  // 封装一个 post 替代他的post
+  Future upload(String path,
+      {FormData? data, Map<String, dynamic>? params}) async {
+    var res = await _dio.post(path, data: data, queryParameters: params);
+    return _handleResponse(res);
+  }
+
   // 封装一个 put 替代他的put
   Future put(String path,
       {Map<String, dynamic>? data, Map<String, dynamic>? params}) async {

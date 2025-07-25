@@ -167,10 +167,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                               source: ImageSource.gallery);
                                           if (file != null) {
                                             PromptAction.sucess('选好了');
-                                            // 临时代码  一会需要上传
-                                            widget.userInfo['avatar'] =
-                                                file.path; // 选中照片的路径
-                                            setState(() {});
+                                            // 临时代码  一会需要上传  要将上传后的图片地址保存到数据中
+                                            // widget.userInfo['avatar'] =
+                                            //     file.path; // 选中照片的路径
+                                            // setState(() {});
+                                            // Navigator.pop(context);
+
+                                            // 请求服务器上传
                                           }
                                         },
                                         child: Row(

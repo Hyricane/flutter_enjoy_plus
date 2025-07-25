@@ -20,6 +20,8 @@ class HTTP_PATH {
   static const String USER_REFRESH_TOKEN = '/refreshToken';
   // 更新用户信息的接口路径
   // static const String USER_UPDATE = '/userInfo';
+  // 上传头像的接口路径
+  static const String USER_UPLOAD_AVATAR = '/upload';
 }
 
 
