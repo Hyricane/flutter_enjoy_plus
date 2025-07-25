@@ -17,3 +17,8 @@ loginAPI(Map<String, dynamic> data) {
 getUserInfoAPI() {
   return requestDio.get(HTTP_PATH.USER_INFO);
 }
+
+// 封装一个请求更新用户信息的API接口函数  updateUserInfoAPI({'nickName': '张三', 'avatar': ''})
+updateUserInfoAPI(Map<String, dynamic> data) {
+  return requestDio.put(HTTP_PATH.USER_INFO, data: data);
+}

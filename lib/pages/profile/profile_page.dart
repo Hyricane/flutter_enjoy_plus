@@ -1,4 +1,7 @@
+import 'package:enjoy_plus_flutter_7/utils/EventBus.dart';
 import 'package:flutter/material.dart';
+
+import '../../api/user.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key, required this.userInfo});
@@ -111,7 +114,40 @@ class _ProfilePageState extends State<ProfilePage> {
                     backgroundColor: const Color.fromARGB(255, 85, 145, 175),
                     minimumSize: const Size(100, 50),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    // 判断非空
+                    if (_nickNameController.text.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('昵称不能为空'),
+                        ),
+                      );
+                      return;
+                    }
+                    // 判断用户名是否是2-18位中文或字母或数字或下划线组成
+                    if (!RegExp(r'^[\u4e00-\u9fa5a-zA-Z0-9_]{2,18}$')
+                        .hasMatch(_nickNameController.text)) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('昵称格式不正确'),
+                        ),
+                      );
+                      return;
+                    }
+                    updateUserInfoAPI({
+                      'nickName': _nickNameController.text,
+                      // 相当于带着原来的头像 更新
+                      'avatar': widget.userInfo['avatar'],
+                    }).then((value) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('保存成功'),
+                        ),
+                      );
+                      eventBus.fire(
+                          LogSuccessEvent()); // 发布一个登录成功事件即可   更新minepage页面的用户信息(这个页面订阅了登录成功事件-就会立即请求后端最新的用户信息)
+                    });
+                  },
                   child: const Text(
                     '保存',
                     style: TextStyle(
