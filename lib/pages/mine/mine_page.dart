@@ -45,6 +45,7 @@ class _MinePageState extends State<MinePage> {
 
   Widget getImageWidget() {
     // kIsWeb 标识运行平台是否在web
+    // 脏数据 开发过程中 产生一些测试数据 不合理的数据
     // {avatar: null, id: 7181970497892352, nickName: null}
     if (userInfo['avatar'] != '' && userInfo['avatar'] != null) {
       // 鸿蒙图片
@@ -82,7 +83,8 @@ class _MinePageState extends State<MinePage> {
       Spacer(), // Text().layoutWeight(1)  或者 Blank()
       TextButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/profile');
+            // 带参数  didChangeDependencies ModalRoute.of(context).settings.arguments
+            Navigator.pushNamed(context, '/profile', arguments: userInfo);
           },
           child: Text(
             '去完善信息',
