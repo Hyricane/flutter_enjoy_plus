@@ -53,6 +53,26 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  _testDebug() {
+    // 断点 => 一旦代码开始调试 就会在断点处停下  需要手动执行一行行逻辑  排查问题
+    print('测试');
+    int num = 1;
+    int num2 = 2;
+    int num3 = 3;
+    int sum = num + num2 + num3;
+    print(sum);
+  }
+
+  _testDebug2() {
+    // 断点 => 一旦代码开始调试 就会在断点处停下  需要手动执行一行行逻辑  排查问题
+    print('测试');
+    int num4 = 1;
+    int num5 = 2;
+    int num6 = 3;
+    int sum = num4 + num5 + num6;
+    print(sum);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,29 +115,35 @@ class _ProfilePageState extends State<ProfilePage> {
                                 child: Column(
                                   children: [
                                     Container(
-                                      height: 60,
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        // 设置下边框
-                                        border: Border(
-                                          bottom: BorderSide(
-                                              color: Colors.black, width: 0.5),
-                                        ),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          // 相机的图标
-                                          Icon(Icons.camera_alt),
-                                          // 加点间距
-                                          SizedBox(
-                                            width: 15,
+                                        height: 60,
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          // 设置下边框
+                                          border: Border(
+                                            bottom: BorderSide(
+                                                color: Colors.black,
+                                                width: 0.5),
                                           ),
-                                          Text('拍照'),
-                                        ],
-                                      ),
-                                    ),
+                                        ),
+                                        child: GestureDetector(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              // 相机的图标
+                                              Icon(Icons.camera_alt),
+                                              // 加点间距
+                                              SizedBox(
+                                                width: 15,
+                                              ),
+                                              Text('拍照'),
+                                            ],
+                                          ),
+                                          onTap: () {
+                                            _testDebug(); // flutter调试模式(简单的bug通过print即可)
+                                            _testDebug2(); // flutter调试模式(简单的bug通过print即可)
+                                          },
+                                        )),
                                     Container(
                                       height: 60,
                                       width: double.infinity,
