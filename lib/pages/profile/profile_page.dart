@@ -1,5 +1,7 @@
 import 'package:enjoy_plus_flutter_7/utils/EventBus.dart';
+import 'package:enjoy_plus_flutter_7/utils/PromptAction.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../api/user.dart';
 
@@ -139,7 +141,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                               Text('拍照'),
                                             ],
                                           ),
-                                          onTap: () {
+                                          onTap: () async {
                                             _testDebug(); // flutter调试模式(简单的bug通过print即可)
                                             _testDebug2(); // flutter调试模式(简单的bug通过print即可)
                                           },
@@ -154,18 +156,36 @@ class _ProfilePageState extends State<ProfilePage> {
                                               color: Colors.black, width: 0.5),
                                         ),
                                       ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          // 相册的图标
-                                          Icon(Icons.photo),
-                                          // 加点间距
-                                          SizedBox(
-                                            width: 15,
-                                          ),
-                                          Text('相册'),
-                                        ],
+                                      child: GestureDetector(
+                                        onTap: () async {
+                                          // 下载image_picker  重启项目
+                                          // 选择相册照片
+                                          ImagePicker picker =
+                                              ImagePicker(); // 创建实例
+                                          // 利用实例去拉起相册选择照片
+                                          XFile? file = await picker.pickImage(
+                                              source: ImageSource.gallery);
+                                          if (file != null) {
+                                            PromptAction.sucess('选好了');
+                                            // 临时代码  一会需要上传
+                                            widget.userInfo['avatar'] =
+                                                file.path; // 选中照片的路径
+                                            setState(() {});
+                                          }
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            // 相册的图标
+                                            Icon(Icons.photo),
+                                            // 加点间距
+                                            SizedBox(
+                                              width: 15,
+                                            ),
+                                            Text('相册'),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                     Container(
