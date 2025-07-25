@@ -44,7 +44,10 @@ dependencies:
       url: 'https://gitcode.com/openharmony-sig/flutter_packages.git'
       path: 'packages/shared_preferences/shared_preferences'
   event_bus: ^2.0.1
-  image_picker: ^1.0.4
+  image_picker:
+    git:
+      url: 'https://gitcode.com/openharmony-sig/flutter_packages.git'
+      path: 'packages/image_picker/image_picker'
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,6 @@
 import 'package:enjoy_plus_flutter_7/utils/EventBus.dart';
 import 'package:enjoy_plus_flutter_7/utils/PromptAction.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -174,18 +175,22 @@ class _ProfilePageState extends State<ProfilePage> {
                                             //     file.path; // 选中照片的临时路径
                                             // setState(() {});
                                             // Navigator.pop(context);
-                                            var res =
-                                                await uploadAvatarAPI(file);
-                                            print(res);
-                                            widget.userInfo['avatar'] =
-                                                res['url']; // 上传后的服务中的图片路径
-                                            setState(() {});
-                                            Navigator.pop(context);
+                                            if (kIsWeb) {
+                                              var res =
+                                                  await uploadAvatarAPI(file);
+                                              print(res);
+                                              widget.userInfo['avatar'] =
+                                                  res['url']; // 上传后的服务中的图片路径
+                                              setState(() {});
+                                              Navigator.pop(context);
 
-                                            PromptAction.sucess('上传成功');
-                                            eventBus.fire(LogSuccessEvent());
+                                              PromptAction.sucess('上传成功');
+                                              eventBus.fire(LogSuccessEvent());
 
-                                            // 请求服务器上传
+                                              // 请求服务器上传
+                                            } else {
+                                              print(file.path); // 临时展示一下
+                                            }
                                           }
                                         },
                                         child: Row(
@@ -287,7 +292,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     updateUserInfoAPI({
                       'nickName': _nickNameController.text,
                       // 相当于带着原来的头像 更新
-                      'avatar': widget.userInfo['avatar'],
+                      // 'avatar': widget.userInfo['avatar'],
                     }).then((value) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(

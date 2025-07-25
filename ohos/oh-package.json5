@@ -16,6 +16,7 @@
     "@ohos/flutter_ohos": "file:./har/flutter.har",
     "fluttertoast": "file:./har/fluttertoast.har",
     "@ohos/flutter_module": "file:./entry",
-    "shared_preferences_ohos": "file:./har/shared_preferences_ohos.har"
+    "shared_preferences_ohos": "file:./har/shared_preferences_ohos.har",
+    "image_picker_ohos": "file:./har/image_picker_ohos.har"
   }
 }
