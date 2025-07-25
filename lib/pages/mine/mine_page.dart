@@ -65,13 +65,17 @@ class _MinePageState extends State<MinePage> {
 
   List<Widget> _getRowChildren() {
     return [
-      ClipRRect(
-        borderRadius: BorderRadius.circular(100), // 50/2=25
-        // 头像分为以下几种情况:
-        // 1. 本地图片     Image.asset
-        // 2. 鸿蒙系统中的图片 /data开头    Image.file
-        // 3. 网络图片 http开头     Image.network
-        child: getImageWidget(),
+      SizedBox(
+        width: 50,
+        height: 50,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(100), // 50/2=25
+          // 头像分为以下几种情况:
+          // 1. 本地图片     Image.asset
+          // 2. 鸿蒙系统中的图片 /data开头    Image.file
+          // 3. 网络图片 http开头     Image.network
+          child: getImageWidget(),
+        ),
       ),
       SizedBox(width: 10),
       Text(

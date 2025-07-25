@@ -244,12 +244,19 @@ class _ProfilePageState extends State<ProfilePage> {
                               );
                             });
                       },
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(50.0),
-                        child: _getAvatarWidget(),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                              width: 30,
+                              height: 30,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(50.0),
+                                child: _getAvatarWidget(),
+                              )),
+                          const Icon(Icons.arrow_forward_ios, size: 12)
+                        ],
                       ),
                     ),
-                    const Icon(Icons.arrow_forward_ios, size: 12)
                   ],
                 )
               ],
