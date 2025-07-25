@@ -26,12 +26,16 @@ updateUserInfoAPI(Map<String, dynamic> data) {
 }
 
 // 封装一个请求上传用户头像的API接口函数
-uploadAvatarAPI(XFile file) {
+uploadAvatarAPI(XFile file) async {
   // get post delete put
   // flutter中如何创建formdata实例
   FormData formData = FormData.fromMap({
     // flutter中如何将文件转二进制
-    // 'file': await MultipartFile.fromFile(file.path, filename: file.name),
+    'file': MultipartFile.fromBytes(
+      await file.readAsBytes(), // 获取文件二进制数据-u8array-比arraybuffer更好操作
+      filename: file.name, // 文件名
+      contentType: DioMediaType('image', 'jpg'),
+    ),
     'type': 'avatar',
   });
 

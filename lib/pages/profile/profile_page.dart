@@ -36,9 +36,12 @@ class _ProfilePageState extends State<ProfilePage> {
     if (widget.userInfo['nickName'] != null &&
         widget.userInfo['nickName'] != '') {
       _nickNameController.text = widget.userInfo['nickName'];
+    } else {
+      _nickNameController.text = '游客';
     }
   }
 
+  // 15012345678  我用了
   Widget _getAvatarWidget() {
     if (widget.userInfo['avatar'] != null && widget.userInfo['avatar'] != '') {
       return Image.network(
@@ -166,12 +169,21 @@ class _ProfilePageState extends State<ProfilePage> {
                                           XFile? file = await picker.pickImage(
                                               source: ImageSource.gallery);
                                           if (file != null) {
-                                            PromptAction.sucess('选好了');
                                             // 临时代码  一会需要上传  要将上传后的图片地址保存到数据中
                                             // widget.userInfo['avatar'] =
-                                            //     file.path; // 选中照片的路径
+                                            //     file.path; // 选中照片的临时路径
                                             // setState(() {});
                                             // Navigator.pop(context);
+                                            var res =
+                                                await uploadAvatarAPI(file);
+                                            print(res);
+                                            widget.userInfo['avatar'] =
+                                                res['url']; // 上传后的服务中的图片路径
+                                            setState(() {});
+                                            Navigator.pop(context);
+
+                                            PromptAction.sucess('上传成功');
+                                            eventBus.fire(LogSuccessEvent());
 
                                             // 请求服务器上传
                                           }
