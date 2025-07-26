@@ -470,19 +470,20 @@ packages:
   permission_handler:
     dependency: "direct main"
     description:
-      name: permission_handler
-      sha256: "284a66179cabdf942f838543e10413246f06424d960c92ba95c84439154fcac8"
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "11.0.1"
+      path: permission_handler
+      ref: HEAD
+      resolved-ref: "7acc00e7c9265654b00e81867242e4e2d4d6ad38"
+      url: "https://gitcode.com/openharmony-sig/flutter_permission_handler"
+    source: git
+    version: "10.4.3"
   permission_handler_android:
     dependency: transitive
     description:
       name: permission_handler_android
-      sha256: f9fddd3b46109bd69ff3f9efa5006d2d309b7aec0f3c1c5637a60a2d5659e76e
+      sha256: "59c6322171c29df93a22d150ad95f3aa19ed86542eaec409ab2691b8f35f9a47"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "11.1.0"
+    version: "10.3.6"
   permission_handler_apple:
     dependency: transitive
     description:
@@ -491,6 +492,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "9.1.4"
+  permission_handler_ohos:
+    dependency: transitive
+    description:
+      path: permission_handler_ohos
+      ref: master
+      resolved-ref: "1e7c80f0720aff742d9f1e08017e1753bcad76ef"
+      url: "https://gitee.com/openharmony-sig/flutter_permission_handler.git"
+    source: git
+    version: "10.3.2"
   permission_handler_platform_interface:
     dependency: transitive
     description:

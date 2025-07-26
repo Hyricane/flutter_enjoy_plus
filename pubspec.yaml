@@ -48,7 +48,10 @@ dependencies:
     git:
       url: 'https://gitcode.com/openharmony-sig/flutter_packages.git'
       path: 'packages/image_picker/image_picker'
-  permission_handler: ^11.0.1
+  permission_handler:
+    git:
+      url: https://gitcode.com/openharmony-sig/flutter_permission_handler
+      path: 'permission_handler'
 
 dev_dependencies:
   flutter_test:

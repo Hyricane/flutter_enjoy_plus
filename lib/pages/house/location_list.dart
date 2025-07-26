@@ -21,15 +21,8 @@ class _LocationListState extends State<LocationList> {
   _requestLocationPermission() async {
     // 网页 运行在 浏览器   => 网页的权限来自浏览器
     // 浏览器 运行在 系统中  =>  浏览器的权限来自系统(需要检查你们的系统有没有禁用 浏览器的位置权限)
-    PermissionStatus status = await Permission.location.request(); // 请求位置权限
-    if (status == PermissionStatus.granted) {
-      // 用户允许了位置权限
-      // 获取位置信息
-      print('用户允许了位置权限');
-    } else {
-      // 用户拒绝了位置权限
-      print('用户拒绝了位置权限');
-    }
+    Permission.location
+        .request(); // 请求位置权限  requestPermissionFromUser+module.json5中配权限
   }
 
   @override
