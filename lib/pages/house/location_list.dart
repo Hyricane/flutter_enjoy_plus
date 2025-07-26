@@ -83,7 +83,6 @@ class _LocationListState extends State<LocationList> {
     var res = await dio.get('${GlobalConstants.GD_BASE_URL}${HTTP_PATH.AROUND}',
         queryParameters: {
           'key': 'xxxx', // 标识使用者的身份信息
-          // 'key': 'dd47b6b234842e9a25de0f90e46b243d', // 标识使用者的身份信息
           'location': '$longitude,$latitude', // 经纬度
           'keywords': '养生', // 搜索周边的什么
           'radius': 3000, // 搜索区域的半径  1000米
