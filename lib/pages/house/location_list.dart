@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:enjoy_plus_flutter_7/constants/index.dart';
 import 'package:enjoy_plus_flutter_7/utils/PromptAction.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:geolocator/geolocator.dart';
@@ -20,9 +21,16 @@ class _LocationListState extends State<LocationList> {
     super.initState();
 
     // 向用户要位置的授权
-    _requestLocationPermission();
+    if (kIsWeb) {
+      // 单独处理web 不要授权过程 直接获取经纬度!!!
+      _getLocation();
+      // _requestLocationPermission();
+    } else {
+      _requestLocationPermission();
+    }
   }
 
+  // 授权
   _requestLocationPermission() async {
     // 网页 运行在 浏览器   => 网页的权限来自浏览器
     // 浏览器 运行在 系统中  =>  浏览器的权限来自系统(需要检查你们的系统有没有禁用 浏览器的位置权限)
@@ -37,6 +45,7 @@ class _LocationListState extends State<LocationList> {
     }
   }
 
+  // 获取经纬度
   _getLocation() async {
     Position p = await Geolocator.getCurrentPosition();
     print('${p.longitude} ${p.latitude}');
@@ -46,6 +55,7 @@ class _LocationListState extends State<LocationList> {
     _getAddress(p.longitude, p.latitude);
   }
 
+  // 获取地址
   _getAddress(double longitude, double latitude) async {
     Dio dio = Dio();
     var res = await dio.get(
