@@ -10,6 +10,42 @@ class HouseItem extends StatefulWidget {
 }
 
 class _HouseItemState extends State<HouseItem> {
+  // 将数字 映射(一个对应一个)成一个个文字
+  // Map<int, String> xx = {
+  //   1: '审核中',
+  //   2: '审核通过',
+  //   3: '审核失败',
+  // };
+  // Map<int, Color> xx2 = {
+  //   1: Color.fromRGBO(0, 0, 255, 1),
+  //   2: Color.fromRGBO(0, 255, 0, 1),
+  //   3: Color.fromRGBO(255, 0, 0, 1),
+  // };
+  // Map<int, Color> xx3 = {
+  //   1: Color.fromRGBO(0, 0, 255, 0.3),
+  //   2: Color.fromRGBO(0, 255, 0, 0.3),
+  //   3: Color.fromRGBO(255, 0, 0, 0.3),
+  // };
+
+  // 优化一下上面的映射逻辑 变成一个大Map
+  Map<int, dynamic> xxUltra = {
+    1: {
+      'text': '审核中',
+      'color': Color.fromRGBO(0, 0, 255, 1),
+      'bgColor': Color.fromRGBO(0, 0, 255, 0.3),
+    },
+    2: {
+      'text': '审核通过',
+      'color': Color.fromRGBO(0, 255, 0, 1),
+      'bgColor': Color.fromRGBO(0, 255, 0, 0.3),
+    },
+    3: {
+      'text': '审核未通过',
+      'color': Color.fromRGBO(255, 0, 0, 1),
+      'bgColor': Color.fromRGBO(255, 0, 0, 0.3),
+    },
+  };
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,13 +62,19 @@ class _HouseItemState extends State<HouseItem> {
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(50, 91, 177, 227),
+                  color: xxUltra[widget.item['status']]['bgColor'],
                   borderRadius: BorderRadius.circular(5),
                 ),
-                child: const Text(
-                  '已绑定',
+                child: Text(
+                  // widget.item['status'] == 1
+                  //     ? '审核中'
+                  //     : widget.item['status'] == 2
+                  //         ? '审核通过'
+                  //         : '审核未通过',
+                  // xx[widget.item['status']]!,
+                  xxUltra[widget.item['status']]['text'],
                   style: TextStyle(
-                    color: Color.fromARGB(255, 85, 145, 175),
+                    color: xxUltra[widget.item['status']]['color'],
                   ),
                 ),
               )
