@@ -26,6 +26,7 @@ class HTTP_PATH {
   static const String HOUSE_LIST = '/room'; // 房屋列表
   // 逆地理编码的接口路径
   static const String REVERSE_GEOCODING = '/geocode/regeo';
+  static const String AROUND = "/place/around"; // 周边地址
   // static const String  = '/geocode/regeo'; // 逆地理编码的接口路径
 }
 

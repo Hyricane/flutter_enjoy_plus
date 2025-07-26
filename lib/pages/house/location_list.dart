@@ -15,6 +15,7 @@ class LocationList extends StatefulWidget {
 
 class _LocationListState extends State<LocationList> {
   String _address = '获取中...';
+  List list = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -53,6 +54,7 @@ class _LocationListState extends State<LocationList> {
 
     // 封装函数 逆地理编码
     _getAddress(p.longitude, p.latitude);
+    _getNearbyCommunity(p.longitude, p.latitude);
   }
 
   // 获取地址
@@ -73,6 +75,47 @@ class _LocationListState extends State<LocationList> {
       // print('逆地理编码失败');
       PromptAction.error('逆地理编码失败');
     }
+  }
+
+  // 获取周边小区
+  _getNearbyCommunity(double longitude, double latitude) async {
+    Dio dio = Dio();
+    var res = await dio.get('${GlobalConstants.GD_BASE_URL}${HTTP_PATH.AROUND}',
+        queryParameters: {
+          'key': 'dd47b6b234842e9a25de0f90e46b243d', // 标识使用者的身份信息
+          'location': '$longitude,$latitude', // 经纬度
+          'keywords': '美食', // 搜索周边的什么
+          'radius': 1000, // 搜索区域的半径  1000米
+          'offset': 10 // 搜索结果的数量
+        });
+    print(res.data['pois']);
+    if (res.data['infocode'] == '10000') {
+      setState(() {
+        list = res.data['pois']; // 周边公交站   map
+      });
+    } else {
+      // print('逆地理编码失败');
+      PromptAction.error('周边搜索失败');
+    }
+  }
+
+  List<Widget> getListChildren() {
+    return list.map((item) {
+      return Container(
+        color: Colors.white,
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          children: [
+            Expanded(child: Text(item['name'])),
+            Row(
+              children: [
+                Icon(Icons.arrow_forward_ios, size: 16, color: Colors.black),
+              ],
+            )
+          ],
+        ),
+      );
+    }).toList();
   }
 
   @override
@@ -123,26 +166,27 @@ class _LocationListState extends State<LocationList> {
           ),
           const SizedBox(height: 10),
           ListView(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            children: [
-              Container(
-                color: Colors.white,
-                padding: const EdgeInsets.all(10),
-                child: Row(
-                  children: [
-                    Expanded(child: Text('北京市昌平区政府街19号')),
-                    Row(
-                      children: [
-                        Icon(Icons.arrow_forward_ios,
-                            size: 16, color: Colors.black),
-                      ],
-                    )
-                  ],
-                ),
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              children: getListChildren()
+              // [
+              //   Container(
+              //     color: Colors.white,
+              //     padding: const EdgeInsets.all(10),
+              //     child: Row(
+              //       children: [
+              //         Expanded(child: Text('北京市昌平区政府街19号')),
+              //         Row(
+              //           children: [
+              //             Icon(Icons.arrow_forward_ios,
+              //                 size: 16, color: Colors.black),
+              //           ],
+              //         )
+              //       ],
+              //     ),
+              //   )
+              // ],
               )
-            ],
-          )
         ],
       ),
     );
