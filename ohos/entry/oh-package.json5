@@ -9,6 +9,7 @@
     "fluttertoast": "file:../har/fluttertoast.har",
     "shared_preferences_ohos": "file:../har/shared_preferences_ohos.har",
     "image_picker_ohos": "file:../har/image_picker_ohos.har",
-    "permission_handler_ohos": "file:../har/permission_handler_ohos.har"
+    "permission_handler_ohos": "file:../har/permission_handler_ohos.har",
+    "flutter_geolocator_ohos": "file:../har/flutter_geolocator_ohos.har"
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:geolocator/geolocator.dart';
 
 class LocationList extends StatefulWidget {
   const LocationList({super.key});
@@ -21,8 +22,20 @@ class _LocationListState extends State<LocationList> {
   _requestLocationPermission() async {
     // 网页 运行在 浏览器   => 网页的权限来自浏览器
     // 浏览器 运行在 系统中  =>  浏览器的权限来自系统(需要检查你们的系统有没有禁用 浏览器的位置权限)
-    Permission.location
+    PermissionStatus status = await Permission.location
         .request(); // 请求位置权限  requestPermissionFromUser+module.json5中配权限
+    if (status == PermissionStatus.granted) {
+      print('获取位置权限成功');
+      // 获取当前位置的经纬度 封装一个函数
+      _getLocation();
+    } else {
+      print('获取位置权限失败');
+    }
+  }
+
+  _getLocation() async {
+    Position p = await Geolocator.getCurrentPosition();
+    print('${p.longitude} ${p.latitude}');
   }
 
   @override

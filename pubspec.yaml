@@ -52,6 +52,10 @@ dependencies:
     git:
       url: https://gitcode.com/openharmony-sig/flutter_permission_handler
       path: 'permission_handler'
+  geolocator:
+    git:
+      url: https://gitcode.com/openharmony-sig/fluttertpc_geolocator.git
+      path: geolocator
 
 dev_dependencies:
   flutter_test:
