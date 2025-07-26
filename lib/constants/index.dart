@@ -2,6 +2,7 @@
 class GlobalConstants {
   // 静态属性实现
   static const String BASE_URL = 'https://live-api.itheima.net';
+  static const String GD_BASE_URL = 'https://restapi.amap.com/v3';
   static const int TIME_OUT = 5;
   static const int CODE = 10000;
   // token存储键
@@ -23,6 +24,9 @@ class HTTP_PATH {
   // 上传头像的接口路径
   static const String USER_UPLOAD_AVATAR = '/upload';
   static const String HOUSE_LIST = '/room'; // 房屋列表
+  // 逆地理编码的接口路径
+  static const String REVERSE_GEOCODING = '/geocode/regeo';
+  // static const String  = '/geocode/regeo'; // 逆地理编码的接口路径
 }
 
 

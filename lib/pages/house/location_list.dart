@@ -1,3 +1,6 @@
+import 'package:dio/dio.dart';
+import 'package:enjoy_plus_flutter_7/constants/index.dart';
+import 'package:enjoy_plus_flutter_7/utils/PromptAction.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:geolocator/geolocator.dart';
@@ -10,6 +13,7 @@ class LocationList extends StatefulWidget {
 }
 
 class _LocationListState extends State<LocationList> {
+  String _address = '获取中...';
   @override
   void initState() {
     // TODO: implement initState
@@ -36,6 +40,29 @@ class _LocationListState extends State<LocationList> {
   _getLocation() async {
     Position p = await Geolocator.getCurrentPosition();
     print('${p.longitude} ${p.latitude}');
+    // 经纬度转出具体的位置呢?? 三方库(高德)   鸿蒙全是内置的模块
+
+    // 封装函数 逆地理编码
+    _getAddress(p.longitude, p.latitude);
+  }
+
+  _getAddress(double longitude, double latitude) async {
+    Dio dio = Dio();
+    var res = await dio.get(
+        '${GlobalConstants.GD_BASE_URL}${HTTP_PATH.REVERSE_GEOCODING}',
+        queryParameters: {
+          'key': 'dd47b6b234842e9a25de0f90e46b243d',
+          'location': '$longitude,$latitude',
+        });
+    print(res);
+    if (res.data['infocode'] == '10000') {
+      setState(() {
+        _address = res.data['regeocode']['formatted_address'];
+      });
+    } else {
+      // print('逆地理编码失败');
+      PromptAction.error('逆地理编码失败');
+    }
   }
 
   @override
@@ -61,7 +88,7 @@ class _LocationListState extends State<LocationList> {
             padding: const EdgeInsets.all(10),
             child: Row(
               children: [
-                Expanded(child: Text('北京市昌平区政府街19号')),
+                Expanded(child: Text(_address)),
                 Row(
                   children: [
                     Icon(Icons.location_searching_outlined, color: Colors.blue),
