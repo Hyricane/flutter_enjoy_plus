@@ -82,7 +82,8 @@ class _LocationListState extends State<LocationList> {
     Dio dio = Dio();
     var res = await dio.get('${GlobalConstants.GD_BASE_URL}${HTTP_PATH.AROUND}',
         queryParameters: {
-          'key': 'xxxx', // 标识使用者的身份信息
+          'key': 'dd47b6b234842e9a25de0f90e46b243d', // 标识使用者的身份信息
+          // 'key': 'dd47b6b234842e9a25de0f90e46b243d', // 标识使用者的身份信息
           'location': '$longitude,$latitude', // 经纬度
           'keywords': '养生', // 搜索周边的什么
           'radius': 3000, // 搜索区域的半径  1000米
@@ -142,15 +143,23 @@ class _LocationListState extends State<LocationList> {
             child: Row(
               children: [
                 Expanded(child: Text(_address)),
-                Row(
-                  children: [
-                    Icon(Icons.location_searching_outlined, color: Colors.blue),
-                    SizedBox(width: 2),
-                    Text(
-                      '重新定位',
-                      style: TextStyle(color: Colors.blue),
-                    ),
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    // _getLocation();
+                    _getAddress(116.52187960509696, 39.936738131934206);
+                    _getNearbyCommunity(116.52187960509696, 39.936738131934206);
+                  },
+                  child: Row(
+                    children: [
+                      Icon(Icons.location_searching_outlined,
+                          color: Colors.blue),
+                      SizedBox(width: 2),
+                      Text(
+                        '重新定位',
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    ],
+                  ),
                 )
               ],
             ),
