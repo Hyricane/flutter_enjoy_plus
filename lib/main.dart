@@ -5,6 +5,7 @@ import 'package:enjoy_plus_flutter_7/pages/tabbar_page.dart';
 import 'package:enjoy_plus_flutter_7/utils/TokenManager.dart';
 import 'package:flutter/material.dart';
 
+import 'pages/404.dart';
 import 'pages/notice/notice_detail.dart';
 
 void main() {
@@ -42,7 +43,11 @@ void main() {
             builder: (context) => HouseList(),
           );
         } else {
-          return null;
+          // 点了没反应
+          return MaterialPageRoute(
+            // builder: (context) => Text('404'),
+            builder: (context) => NotFound(),
+          );
         }
       } else {
         // 没有token

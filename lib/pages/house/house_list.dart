@@ -71,7 +71,9 @@ class _HouseListState extends State<HouseList> {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/add_house');
+                      },
                       child: Column(
                         children: [
                           SizedBox(height: 5),
