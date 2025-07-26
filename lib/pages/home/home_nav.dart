@@ -48,14 +48,15 @@ class HomeNav extends StatelessWidget {
       children.add(GestureDetector(
           onTap: () async {
             if (i == 0) {
-              tokenManager.setToken('adshjfhkljsadhflkj');
+              Navigator.pushNamed(ctx, '/house');
+              // tokenManager.setToken('adshjfhkljsadhflkj');
             }
             if (i == 1) {
-              String token = await tokenManager.getToken();
-              print(token);
+              // String token = await tokenManager.getToken();
+              // print(token);
             }
             if (i == 2) {
-              tokenManager.removeToken();
+              // tokenManager.removeToken();
             }
 
             // 测试首选项 持久化
@@ -90,15 +91,15 @@ class HomeNav extends StatelessWidget {
             //           ],
             //         ));
 
-            ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
-                // action: SnackBarAction(
-                //   label: '确定',
-                //   onPressed: () {
-                //     print('666');
-                //   },
-                // ),
-                content: Text('我通知你'),
-                duration: Duration(seconds: 1)));
+            // ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
+            //     // action: SnackBarAction(
+            //     //   label: '确定',
+            //     //   onPressed: () {
+            //     //     print('666');
+            //     //   },
+            //     // ),
+            //     content: Text('我通知你'),
+            //     duration: Duration(seconds: 1)));
             // showDialog(
             //     context: ctx,
             //     builder: (BuildContext ctx) {

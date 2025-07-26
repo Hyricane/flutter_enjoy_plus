@@ -1,3 +1,4 @@
+import 'package:enjoy_plus_flutter_7/pages/house/house_list.dart';
 import 'package:enjoy_plus_flutter_7/pages/login/index.dart';
 import 'package:enjoy_plus_flutter_7/pages/profile/profile_page.dart';
 import 'package:enjoy_plus_flutter_7/pages/tabbar_page.dart';
@@ -35,6 +36,10 @@ void main() {
           return MaterialPageRoute(
             builder: (context) => ProfilePage(
                 userInfo: settings.arguments as Map<String, dynamic>), // 父传子
+          );
+        } else if (settings.name == '/house') {
+          return MaterialPageRoute(
+            builder: (context) => HouseList(),
           );
         } else {
           return null;
