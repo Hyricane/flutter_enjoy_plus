@@ -84,8 +84,8 @@ class _LocationListState extends State<LocationList> {
         queryParameters: {
           'key': 'dd47b6b234842e9a25de0f90e46b243d', // 标识使用者的身份信息
           'location': '$longitude,$latitude', // 经纬度
-          'keywords': '美食', // 搜索周边的什么
-          'radius': 1000, // 搜索区域的半径  1000米
+          'keywords': '养生', // 搜索周边的什么
+          'radius': 3000, // 搜索区域的半径  1000米
           'offset': 10 // 搜索结果的数量
         });
     print(res.data['pois']);
