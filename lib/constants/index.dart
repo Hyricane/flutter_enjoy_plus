@@ -22,6 +22,7 @@ class HTTP_PATH {
   // static const String USER_UPDATE = '/userInfo';
   // 上传头像的接口路径
   static const String USER_UPLOAD_AVATAR = '/upload';
+  static const String HOUSE_LIST = '/room'; // 房屋列表
 }
 
 

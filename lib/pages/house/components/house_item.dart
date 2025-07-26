@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class HouseItem extends StatefulWidget {
-  const HouseItem({super.key});
+  const HouseItem({super.key, required this.item});
+
+  final Map<String, dynamic> item;
 
   @override
   State<HouseItem> createState() => _HouseItemState();
@@ -19,7 +21,7 @@ class _HouseItemState extends State<HouseItem> {
         children: [
           Row(
             children: [
-              const Expanded(child: Text('仙基公寓')),
+              Expanded(child: Text(widget.item['point'])),
               const Spacer(),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
@@ -46,7 +48,7 @@ class _HouseItemState extends State<HouseItem> {
               Spacer(),
               Expanded(
                 child: Text(
-                  '1栋2003室',
+                  '${widget.item['building']} ${widget.item['room']}',
                   textAlign: TextAlign.right,
                 ),
               ),
@@ -62,7 +64,7 @@ class _HouseItemState extends State<HouseItem> {
               Spacer(),
               Expanded(
                 child: Text(
-                  '张继科',
+                  widget.item['name'],
                   textAlign: TextAlign.right,
                 ),
               ),

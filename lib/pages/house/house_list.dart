@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../../api/house.dart';
 import 'components/house_item.dart';
+
+// 定义一个接口路径
+// 封装一个api函数
+// 组件内封装一个调用请求的函数  fn   定义状态  赋值 setState(() {})
+// initState中  fn()
+// 渲染UI
 
 class HouseList extends StatefulWidget {
   const HouseList({super.key});
@@ -10,6 +17,21 @@ class HouseList extends StatefulWidget {
 }
 
 class _HouseListState extends State<HouseList> {
+  List list = []; // 定义数组
+
+  void getHouseList() async {
+    list = await getHouseListAPI();
+    print(list);
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getHouseList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,8 +46,10 @@ class _HouseListState extends State<HouseList> {
           Padding(
             padding: const EdgeInsets.only(bottom: 80, left: 10, right: 10),
             child: ListView.separated(
+              // 自己手动循环遍历生成一个个结构
+              // 自动完成遍历  只需要你提供一个结构
               itemBuilder: (BuildContext context, int index) {
-                return const HouseItem();
+                return HouseItem(item: list[index]);
               },
               separatorBuilder: (BuildContext context, int index) {
                 return Container(
@@ -33,7 +57,7 @@ class _HouseListState extends State<HouseList> {
                   color: const Color.fromARGB(255, 241, 238, 238),
                 );
               },
-              itemCount: 5,
+              itemCount: list.length,
             ),
           ),
           Positioned(
