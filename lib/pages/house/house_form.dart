@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:enjoy_plus_flutter_7/api/user.dart';
 import 'package:enjoy_plus_flutter_7/utils/PhotoDialog.dart';
 import 'package:enjoy_plus_flutter_7/utils/PromptAction.dart';
 import 'package:flutter/foundation.dart';
@@ -45,9 +46,14 @@ class _HouseFormState extends State<HouseForm> {
     // 关闭弹窗
     Navigator.of(context).pop();
     if (file != null) {
-      setState(() {
-        _formData[tag] = file.path;
-      });
+      var res = await uploadAvatarAPI(file, false);
+      _formData[tag] = res['url']; // 传到服务器后的图片地址 存下来
+      print(res['url']);
+      setState(() {});
+      // 上传到服务器 再展示
+      // setState(() {
+      //   _formData[tag] = file.path; // 临时展示
+      // });
     }
   }
 
@@ -157,6 +163,7 @@ class _HouseFormState extends State<HouseForm> {
     }
 
     print('完成校验 等待请求');
+    print(_formData);
   }
 
   @override

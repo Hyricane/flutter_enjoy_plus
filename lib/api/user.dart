@@ -27,7 +27,7 @@ updateUserInfoAPI(Map<String, dynamic> data) {
 }
 
 // 封装一个请求上传用户头像的API接口函数
-uploadAvatarAPI(XFile file) async {
+uploadAvatarAPI(XFile file, bool isAvatar) async {
   // get post delete put
   // flutter中如何创建formdata实例
   FormData formData = FormData.fromMap({
@@ -42,7 +42,7 @@ uploadAvatarAPI(XFile file) async {
             file.path, filename: file.name, // 文件名
             contentType: DioMediaType('image', 'jpg'),
           ), // flutter 3.7版本   模拟器版本
-    'type': 'avatar',
+    'type': isAvatar ? 'avatar' : null,
   });
 
   return requestDio.upload(HTTP_PATH.USER_UPLOAD_AVATAR, data: formData);

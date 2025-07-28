@@ -105,7 +105,7 @@ class _ProfilePageState extends State<ProfilePage> {
       // if (kIsWeb) {
       // 鸿蒙端的代码大部分和web雷同 少部分调整
       // try {
-      var res = await uploadAvatarAPI(file);
+      var res = await uploadAvatarAPI(file, true);
       print(res);
       widget.userInfo['avatar'] = res['url']; // 上传后的服务中的图片路径
       setState(() {});
