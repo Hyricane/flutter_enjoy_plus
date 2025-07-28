@@ -54,17 +54,26 @@ class _RoomListState extends State<BuildingList> {
           return Container(
             color: Colors.white,
             padding: const EdgeInsets.all(10),
-            child: Row(
-              children: [
-                Expanded(
-                    child: Text('${data['point']}${index + 1}${data['type']}')),
-                Row(
-                  children: [
-                    Icon(Icons.arrow_forward_ios,
-                        size: 16, color: Colors.black),
-                  ],
-                )
-              ],
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, '/room_list', arguments: {
+                  'point': '${data['point']}',
+                  'building': '${index + 1}${data['type']}'
+                });
+              },
+              child: Row(
+                children: [
+                  Expanded(
+                      child:
+                          Text('${data['point']}${index + 1}${data['type']}')),
+                  Row(
+                    children: [
+                      Icon(Icons.arrow_forward_ios,
+                          size: 16, color: Colors.black),
+                    ],
+                  )
+                ],
+              ),
             ),
           );
         },

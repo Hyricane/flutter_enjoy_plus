@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'pages/404.dart';
 import 'pages/house/building_list.dart';
 import 'pages/house/location_list.dart';
+import 'pages/house/room_list.dart';
 import 'pages/notice/notice_detail.dart';
 
 void main() {
@@ -54,6 +55,15 @@ void main() {
             // builder: (context) => Text('add'),
             builder: (context) => BuildingList(
                 point: (settings.arguments as Map<String, dynamic>)['point']),
+          );
+        } else if (settings.name == '/room_list') {
+          return MaterialPageRoute(
+            // builder: (context) => Text('add'),
+            builder: (context) => RoomList(
+              point: (settings.arguments as Map<String, dynamic>)['point'],
+              building:
+                  (settings.arguments as Map<String, dynamic>)['building'],
+            ),
           );
         } else {
           // 点了没反应
