@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:enjoy_plus_flutter_7/api/house.dart';
 import 'package:enjoy_plus_flutter_7/api/user.dart';
 import 'package:enjoy_plus_flutter_7/utils/PhotoDialog.dart';
 import 'package:enjoy_plus_flutter_7/utils/PromptAction.dart';
@@ -18,7 +19,7 @@ class HouseForm extends StatefulWidget {
 }
 
 class _HouseFormState extends State<HouseForm> {
-  final Map _formData = {
+  final Map<String, dynamic> _formData = {
     'point': '', // 小区信息
     'building': '', // 小区楼栋信息
     'room': '', // 小区房间信息
@@ -121,7 +122,7 @@ class _HouseFormState extends State<HouseForm> {
     ]);
   }
 
-  _submit() {
+  _submit() async {
     // 提交前 校验
     // 小区名 楼栋号 房间号 不能为空
     if (_formData['point'] == '' ||
@@ -164,6 +165,21 @@ class _HouseFormState extends State<HouseForm> {
 
     print('完成校验 等待请求');
     print(_formData);
+
+    await addHouseAPI(_formData);
+    // 提示
+    PromptAction.sucess('添加成功');
+    // 返回
+    // Navigator.pop(context);
+    // Navigator.pop(context);
+    // Navigator.pop(context);
+    // Navigator.pop(context);
+    // Navigator.pop(context);  一直返回 直到某个页面 停下来(回调函数的返回值一旦是true 停在这个页面 不再返回)
+    // 返回到指定的页面
+    Navigator.popUntil(context, (Route<dynamic> route) {
+      // 直到有一个页面的路由名是 /house
+      return route.settings.name == '/house';
+    });
   }
 
   @override
