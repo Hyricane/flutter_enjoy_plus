@@ -1,3 +1,4 @@
+import 'package:enjoy_plus_flutter_7/utils/PromptAction.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -98,7 +99,8 @@ class _HouseFormState extends State<HouseForm> {
             color: Colors.white,
             padding:
                 const EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 15),
-            child: const Text('仙基公寓4单元 1602'),
+            child: Text(
+                '${_formData['point']} ${_formData['building']} ${_formData['room']}'),
           ),
           // 业主信息
           Container(
@@ -124,6 +126,11 @@ class _HouseFormState extends State<HouseForm> {
               inputFormatters: [
                 LengthLimitingTextInputFormatter(10),
               ],
+              onChanged: (String value) {
+                setState(() {
+                  _formData['name'] = value;
+                });
+              },
             ),
           ),
           // 性别
@@ -138,11 +145,14 @@ class _HouseFormState extends State<HouseForm> {
                 ),
                 const SizedBox(width: 20),
                 Radio(
-                  value: 1,
-                  groupValue: _formData['gender'],
+                  value: 1, // 当前单选框的值
+                  groupValue: _formData['gender'], // Radio默认选中的值
                   onChanged: (value) {
+                    // 选中状态改变时 触发onChange
                     setState(() {
                       _formData['gender'] = value ?? '';
+                      // print('object');
+                      // PromptAction.sucess('选中了${_formData['gender']}');
                     });
                   },
                 ),
@@ -154,6 +164,7 @@ class _HouseFormState extends State<HouseForm> {
                   onChanged: (value) {
                     setState(() {
                       _formData['gender'] = value ?? '';
+                      // PromptAction.sucess('选中了${_formData['gender']}');
                     });
                   },
                 ),
@@ -166,18 +177,22 @@ class _HouseFormState extends State<HouseForm> {
             color: Colors.white,
             padding: const EdgeInsets.only(left: 10, right: 10),
             child: TextField(
-              keyboardType: TextInputType.phone,
-              maxLength: 11,
-              decoration: const InputDecoration(
-                labelText: '手机号',
-                hintText: '请输入您的手机号',
-                hintStyle: TextStyle(color: Colors.grey),
-                border: InputBorder.none,
-              ),
-              inputFormatters: [
-                LengthLimitingTextInputFormatter(10),
-              ],
-            ),
+                keyboardType: TextInputType.phone,
+                maxLength: 11,
+                decoration: const InputDecoration(
+                  labelText: '手机号',
+                  hintText: '请输入您的手机号',
+                  hintStyle: TextStyle(color: Colors.grey),
+                  border: InputBorder.none,
+                ),
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(10),
+                ],
+                onChanged: (String value) {
+                  setState(() {
+                    _formData['mobile'] = value;
+                  });
+                }),
           ),
           // 业主信息
           Container(
@@ -227,7 +242,7 @@ class _HouseFormState extends State<HouseForm> {
             padding: const EdgeInsets.all(10),
             child: ElevatedButton(
               onPressed: () {
-                // TODO: 提交审核
+                print(_formData);
               },
               child: const Column(
                 children: [
