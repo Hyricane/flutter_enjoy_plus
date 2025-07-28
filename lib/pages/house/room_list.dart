@@ -82,15 +82,24 @@ class _RoomListState extends State<RoomList> {
             return Container(
                 color: Colors.white,
                 padding: const EdgeInsets.all(10),
-                child: Row(children: [
-                  Expanded(
-                      child: Text(
-                          '${data['point']}${data['building']}${data['rooms'][index]}室')),
-                  const Row(children: [
-                    Icon(Icons.arrow_forward_ios,
-                        size: 16, color: Colors.black),
-                  ])
-                ]));
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/house_form', arguments: {
+                      'point': '${data['point']}',
+                      'building': '${data['building']}',
+                      'room': '${data['rooms'][index]}室' // 101室
+                    });
+                  },
+                  child: Row(children: [
+                    Expanded(
+                        child: Text(
+                            '${data['point']}${data['building']}${data['rooms'][index]}室')),
+                    const Row(children: [
+                      Icon(Icons.arrow_forward_ios,
+                          size: 16, color: Colors.black),
+                    ])
+                  ]),
+                ));
           },
           itemCount: (data['rooms'] as List).length,
         ));

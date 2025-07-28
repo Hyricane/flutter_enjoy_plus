@@ -1,3 +1,4 @@
+import 'package:enjoy_plus_flutter_7/pages/house/house_form.dart';
 import 'package:enjoy_plus_flutter_7/pages/house/house_list.dart';
 import 'package:enjoy_plus_flutter_7/pages/login/index.dart';
 import 'package:enjoy_plus_flutter_7/pages/profile/profile_page.dart';
@@ -64,6 +65,12 @@ void main() {
               building:
                   (settings.arguments as Map<String, dynamic>)['building'],
             ),
+          );
+        } else if (settings.name == '/house_form') {
+          return MaterialPageRoute(
+            // builder: (context) => Text('add'),
+            builder: (context) =>
+                HouseForm(params: settings.arguments as Map<String, dynamic>),
           );
         } else {
           // 点了没反应
