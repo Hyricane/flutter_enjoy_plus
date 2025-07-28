@@ -33,8 +33,11 @@ class _HouseFormState extends State<HouseForm> {
     print(_formData);
   }
 
+  // tag:  'idcardFrontUrl' 正面  'idcardBackUrl' 背面
+  // 点击上传时  我需要区分这次上传正面还是背面  用tag区分
+  // info: UI组件中的文字部分
   Widget _buildAddIdcardPhoto(String tag, String info) {
-    return const Column(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -44,7 +47,7 @@ class _HouseFormState extends State<HouseForm> {
           color: Color.fromARGB(255, 85, 145, 175),
         ),
         Text(
-          '上传人像面照片',
+          info,
           style: TextStyle(
             color: Color.fromARGB(255, 85, 145, 175),
           ),
@@ -53,6 +56,8 @@ class _HouseFormState extends State<HouseForm> {
     );
   }
 
+  // tag 区分正面 背面
+  // photoUrl 上传好的图片地址
   Widget _buildIdcardPhoto(String tag, String photoUrl) {
     return Stack(children: [
       SizedBox(
@@ -260,11 +265,11 @@ class _HouseFormState extends State<HouseForm> {
             color: Colors.white,
             height: 320,
             padding: const EdgeInsets.all(10),
-            child: _formData['idcardFrontUrl'] == ''
+            child: _formData['idcardFrontUrl'] == '' // 没有上传 显示上传组件
                 ? _buildAddIdcardPhoto('idcardFrontUrl', '上传人像面照片')
                 : _buildIdcardPhoto(
                     'idcardFrontUrl',
-                    _formData['idcardFrontUrl'],
+                    _formData['idcardFrontUrl'], // 上传图片地址
                   ),
           ),
           const SizedBox(height: 20),
@@ -273,7 +278,7 @@ class _HouseFormState extends State<HouseForm> {
             color: Colors.white,
             height: 320,
             padding: const EdgeInsets.all(10),
-            child: _formData['idcardBackUrl'] == ''
+            child: _formData['idcardBackUrl'] == '' // 身份证背面图片为空 显示上传组件
                 ? _buildAddIdcardPhoto('idcardBackUrl', '上传国徽面照片')
                 : _buildIdcardPhoto(
                     'idcardBackUrl',
