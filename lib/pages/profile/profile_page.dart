@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:enjoy_plus_flutter_7/utils/EventBus.dart';
+import 'package:enjoy_plus_flutter_7/utils/PhotoDialog.dart';
 import 'package:enjoy_plus_flutter_7/utils/PromptAction.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -88,6 +89,46 @@ class _ProfilePageState extends State<ProfilePage> {
     print(sum);
   }
 
+  // 上传头像的业务逻辑 抽离到了这个_selectAvatar
+  _selectAvatar() async {
+    // 下载image_picker  重启项目
+    // 选择相册照片
+    ImagePicker picker = ImagePicker(); // 创建实例
+    // 利用实例去拉起相册选择照片
+    XFile? file = await picker.pickImage(source: ImageSource.gallery);
+    if (file != null) {
+      // 临时代码  一会需要上传  要将上传后的图片地址保存到数据中
+      // widget.userInfo['avatar'] =
+      //     file.path; // 选中照片的临时路径
+      // setState(() {});
+      // Navigator.pop(context);
+      // if (kIsWeb) {
+      // 鸿蒙端的代码大部分和web雷同 少部分调整
+      // try {
+      var res = await uploadAvatarAPI(file);
+      print(res);
+      widget.userInfo['avatar'] = res['url']; // 上传后的服务中的图片路径
+      setState(() {});
+      Navigator.pop(context);
+
+      PromptAction.sucess('上传成功');
+      eventBus.fire(LogSuccessEvent());
+      // } catch (e) {
+      //   print(e.toString());
+      // }
+
+      // 请求服务器上传
+      // } else {
+      //   print(file.path); // 临时展示一下
+      //   widget.userInfo['avatar'] =
+      //       file.path;
+      //   setState(() {});
+      //   // 关闭弹窗
+      //   Navigator.of(context).pop();
+      // }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,141 +154,11 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        // 底部弹出半模态
-                        showModalBottomSheet(
-                            context: context,
-                            builder: (BuildContext ctx) {
-                              return Container(
-                                width: double.infinity,
-                                height: 180,
-                                decoration: BoxDecoration(
-                                  // 设置左上圆角20  右上圆角20
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(20),
-                                    topRight: Radius.circular(20),
-                                  ),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                        height: 60,
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          // 设置下边框
-                                          border: Border(
-                                            bottom: BorderSide(
-                                                color: Colors.black,
-                                                width: 0.5),
-                                          ),
-                                        ),
-                                        child: GestureDetector(
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              // 相机的图标
-                                              Icon(Icons.camera_alt),
-                                              // 加点间距
-                                              SizedBox(
-                                                width: 15,
-                                              ),
-                                              Text('拍照'),
-                                            ],
-                                          ),
-                                          onTap: () async {
-                                            _testDebug(); // flutter调试模式(简单的bug通过print即可)
-                                            _testDebug2(); // flutter调试模式(简单的bug通过print即可)
-                                          },
-                                        )),
-                                    Container(
-                                      height: 60,
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        // 设置下边框
-                                        border: Border(
-                                          bottom: BorderSide(
-                                              color: Colors.black, width: 0.5),
-                                        ),
-                                      ),
-                                      child: GestureDetector(
-                                        onTap: () async {
-                                          // 下载image_picker  重启项目
-                                          // 选择相册照片
-                                          ImagePicker picker =
-                                              ImagePicker(); // 创建实例
-                                          // 利用实例去拉起相册选择照片
-                                          XFile? file = await picker.pickImage(
-                                              source: ImageSource.gallery);
-                                          if (file != null) {
-                                            // 临时代码  一会需要上传  要将上传后的图片地址保存到数据中
-                                            // widget.userInfo['avatar'] =
-                                            //     file.path; // 选中照片的临时路径
-                                            // setState(() {});
-                                            // Navigator.pop(context);
-                                            // if (kIsWeb) {
-                                            // 鸿蒙端的代码大部分和web雷同 少部分调整
-                                            // try {
-                                            var res =
-                                                await uploadAvatarAPI(file);
-                                            print(res);
-                                            widget.userInfo['avatar'] =
-                                                res['url']; // 上传后的服务中的图片路径
-                                            setState(() {});
-                                            Navigator.pop(context);
-
-                                            PromptAction.sucess('上传成功');
-                                            eventBus.fire(LogSuccessEvent());
-                                            // } catch (e) {
-                                            //   print(e.toString());
-                                            // }
-
-                                            // 请求服务器上传
-                                            // } else {
-                                            //   print(file.path); // 临时展示一下
-                                            //   widget.userInfo['avatar'] =
-                                            //       file.path;
-                                            //   setState(() {});
-                                            //   // 关闭弹窗
-                                            //   Navigator.of(context).pop();
-                                            // }
-                                          }
-                                        },
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            // 相册的图标
-                                            Icon(Icons.photo),
-                                            // 加点间距
-                                            SizedBox(
-                                              width: 15,
-                                            ),
-                                            Text('相册'),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 60,
-                                      width: double.infinity,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          // 取消的图标
-                                          Icon(Icons.cancel),
-                                          // 加点间距
-                                          SizedBox(
-                                            width: 15,
-                                          ),
-                                          Text('取消'),
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              );
-                            });
+                        // 底部弹出半模态 => 解耦的设计思想  业务和UI分离
+                        showPhotoDialog(context, () {
+                          // 上传头像
+                          _selectAvatar();
+                        });
                       },
                       child: Row(
                         children: [
