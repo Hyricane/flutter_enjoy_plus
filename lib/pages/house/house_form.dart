@@ -75,6 +75,50 @@ class _HouseFormState extends State<HouseForm> {
     ]);
   }
 
+  _submit() {
+    // 提交前 校验
+    // 小区名 楼栋号 房间号 不能为空
+    if (_formData['point'] == '' ||
+        _formData['building'] == '' ||
+        _formData['room'] == '') {
+      PromptAction.error('请填写完整的小区信息');
+      return;
+    }
+    // 业主名不能为空
+    if (_formData['name'] == '') {
+      PromptAction.error('请填写业主姓名');
+      return;
+    }
+    // 业主名需要满足2-16位中文 需要考虑到少数民族名字中有·这种情况 需要用正则表达式
+    if (!RegExp(r'^[\u4e00-\u9fa5]{2,20}(·[\u4e00-\u9fa5]{2,20}){0,4}$')
+        .hasMatch(_formData['name'])) {
+      PromptAction.error('请填写2-16位中文的业主姓名');
+      return;
+    }
+    // 业主电话不能为空
+    if ((_formData['mobile'] as String).isEmpty) {
+      PromptAction.error('请填写业主电话');
+      return;
+    }
+    // 业主电话格式校验
+    if (!RegExp(r'^1[3-9]\d{9}$').hasMatch(_formData['mobile'])) {
+      PromptAction.error('请填写正确的手机号码');
+      return;
+    }
+
+    // 身份证照片不能为空
+    if ((_formData['idcardFrontUrl'] as String).isEmpty) {
+      PromptAction.error('请上传身份证正面照片');
+      return;
+    }
+    if ((_formData['idcardBackUrl'] as String).isEmpty) {
+      PromptAction.error('请上传身份证背面照片');
+      return;
+    }
+
+    print('完成校验 等待请求');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,7 +168,7 @@ class _HouseFormState extends State<HouseForm> {
                 border: InputBorder.none,
               ),
               inputFormatters: [
-                LengthLimitingTextInputFormatter(10),
+                LengthLimitingTextInputFormatter(15),
               ],
               onChanged: (String value) {
                 setState(() {
@@ -178,7 +222,7 @@ class _HouseFormState extends State<HouseForm> {
             padding: const EdgeInsets.only(left: 10, right: 10),
             child: TextField(
                 keyboardType: TextInputType.phone,
-                maxLength: 11,
+                maxLength: 11, // 最大长度
                 decoration: const InputDecoration(
                   labelText: '手机号',
                   hintText: '请输入您的手机号',
@@ -186,8 +230,8 @@ class _HouseFormState extends State<HouseForm> {
                   border: InputBorder.none,
                 ),
                 inputFormatters: [
-                  LengthLimitingTextInputFormatter(10),
-                ],
+                  LengthLimitingTextInputFormatter(11),
+                ], // 限制输入长度
                 onChanged: (String value) {
                   setState(() {
                     _formData['mobile'] = value;
@@ -242,7 +286,7 @@ class _HouseFormState extends State<HouseForm> {
             padding: const EdgeInsets.all(10),
             child: ElevatedButton(
               onPressed: () {
-                print(_formData);
+                _submit();
               },
               child: const Column(
                 children: [
