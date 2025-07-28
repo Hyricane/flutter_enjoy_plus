@@ -54,9 +54,10 @@ class _RoomListState extends State<BuildingList> {
           return Container(
             color: Colors.white,
             padding: const EdgeInsets.all(10),
-            child: const Row(
+            child: Row(
               children: [
-                Expanded(child: Text('新龙城4单元')),
+                Expanded(
+                    child: Text('${data['point']}${index + 1}${data['type']}')),
                 Row(
                   children: [
                     Icon(Icons.arrow_forward_ios,
@@ -67,7 +68,7 @@ class _RoomListState extends State<BuildingList> {
             ),
           );
         },
-        itemCount: 10,
+        itemCount: data['size'],
       ),
     );
   }
