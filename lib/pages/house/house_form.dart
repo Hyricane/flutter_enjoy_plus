@@ -1,6 +1,11 @@
+import 'dart:io';
+
+import 'package:enjoy_plus_flutter_7/utils/PhotoDialog.dart';
 import 'package:enjoy_plus_flutter_7/utils/PromptAction.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 
 class HouseForm extends StatefulWidget {
   const HouseForm({super.key, required this.params});
@@ -33,27 +38,57 @@ class _HouseFormState extends State<HouseForm> {
     print(_formData);
   }
 
+  selectSFZ(String tag) async {
+    // 自己的业务  通过回调 塞进去
+    ImagePicker picker = ImagePicker();
+    XFile? file = await picker.pickImage(source: ImageSource.gallery);
+    // 关闭弹窗
+    Navigator.of(context).pop();
+    if (file != null) {
+      setState(() {
+        _formData[tag] = file.path;
+      });
+    }
+  }
+
   // tag:  'idcardFrontUrl' 正面  'idcardBackUrl' 背面
   // 点击上传时  我需要区分这次上传正面还是背面  用tag区分
   // info: UI组件中的文字部分
   Widget _buildAddIdcardPhoto(String tag, String info) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Icon(
-          Icons.add,
-          size: 30,
-          color: Color.fromARGB(255, 85, 145, 175),
-        ),
-        Text(
-          info,
-          style: TextStyle(
+    return GestureDetector(
+      onTap: () {
+        showPhotoDialog(context, () {
+          selectSFZ(tag);
+        });
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.add,
+            size: 30,
             color: Color.fromARGB(255, 85, 145, 175),
           ),
-        ),
-      ],
+          Text(
+            info,
+            style: TextStyle(
+              color: Color.fromARGB(255, 85, 145, 175),
+            ),
+          ),
+        ],
+      ),
     );
+  }
+
+  getSFZPicture(String photoUrl) {
+    if (kIsWeb || !photoUrl.startsWith('/data')) {
+      // 只考虑了web平台 没有考虑别的平台 ios 安卓 鸿蒙
+      return Image.network(photoUrl, fit: BoxFit.contain);
+    } else {
+      // 其他平台
+      return Image.file(File(photoUrl), fit: BoxFit.contain);
+    }
   }
 
   // tag 区分正面 背面
@@ -63,7 +98,7 @@ class _HouseFormState extends State<HouseForm> {
       SizedBox(
         width: MediaQuery.of(context).size.width - 20,
         height: 300,
-        child: Image.asset(photoUrl, fit: BoxFit.contain),
+        child: getSFZPicture(photoUrl),
       ),
       Positioned(
         right: 0,
