@@ -6,6 +6,7 @@ import 'package:enjoy_plus_flutter_7/utils/TokenManager.dart';
 import 'package:flutter/material.dart';
 
 import 'pages/404.dart';
+import 'pages/house/building_list.dart';
 import 'pages/house/location_list.dart';
 import 'pages/notice/notice_detail.dart';
 
@@ -47,6 +48,12 @@ void main() {
           return MaterialPageRoute(
             // builder: (context) => Text('add'),
             builder: (context) => LocationList(),
+          );
+        } else if (settings.name == '/building_list') {
+          return MaterialPageRoute(
+            // builder: (context) => Text('add'),
+            builder: (context) => BuildingList(
+                point: (settings.arguments as Map<String, dynamic>)['point']),
           );
         } else {
           // 点了没反应

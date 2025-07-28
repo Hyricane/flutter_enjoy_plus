@@ -85,7 +85,7 @@ class _LocationListState extends State<LocationList> {
           'key': 'dd47b6b234842e9a25de0f90e46b243d', // 标识使用者的身份信息
           // 'key': 'dd47b6b234842e9a25de0f90e46b243d', // 标识使用者的身份信息
           'location': '$longitude,$latitude', // 经纬度
-          'keywords': '养生', // 搜索周边的什么
+          'keywords': '小区', // 搜索周边的什么
           'radius': 3000, // 搜索区域的半径  1000米
           'offset': 10 // 搜索结果的数量
         });
@@ -105,15 +105,22 @@ class _LocationListState extends State<LocationList> {
       return Container(
         color: Colors.white,
         padding: const EdgeInsets.all(10),
-        child: Row(
-          children: [
-            Expanded(child: Text(item['name'])),
-            Row(
-              children: [
-                Icon(Icons.arrow_forward_ios, size: 16, color: Colors.black),
-              ],
-            )
-          ],
+        child: GestureDetector(
+          onTap: () {
+            // 跳转到添加小区页面  point小区 building楼栋 room房间
+            Navigator.pushNamed(context, '/building_list',
+                arguments: {'point': item['name']});
+          },
+          child: Row(
+            children: [
+              Expanded(child: Text(item['name'])),
+              Row(
+                children: [
+                  Icon(Icons.arrow_forward_ios, size: 16, color: Colors.black),
+                ],
+              )
+            ],
+          ),
         ),
       );
     }).toList();
