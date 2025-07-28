@@ -1,3 +1,4 @@
+import 'package:enjoy_plus_flutter_7/utils/EventBus.dart';
 import 'package:flutter/material.dart';
 
 import '../../api/house.dart';
@@ -30,6 +31,10 @@ class _HouseListState extends State<HouseList> {
     // TODO: implement initState
     super.initState();
     getHouseList();
+    //订阅刷新事件
+    eventBus.on<RefreshEvent>().listen((event) {
+      getHouseList();
+    });
   }
 
   @override

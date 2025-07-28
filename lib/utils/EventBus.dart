@@ -16,6 +16,10 @@ class LogSuccessEvent {
   final String info = "logsuccess";
 }
 
+class RefreshEvent {
+  final String message = "refresh";
+}
+
 // EventBus如何使用
 // 订阅
 // eventBus.on<EatEvent>().listen((event) {

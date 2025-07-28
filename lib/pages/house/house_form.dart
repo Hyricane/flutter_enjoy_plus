@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:enjoy_plus_flutter_7/api/house.dart';
 import 'package:enjoy_plus_flutter_7/api/user.dart';
+import 'package:enjoy_plus_flutter_7/utils/EventBus.dart';
 import 'package:enjoy_plus_flutter_7/utils/PhotoDialog.dart';
 import 'package:enjoy_plus_flutter_7/utils/PromptAction.dart';
 import 'package:flutter/foundation.dart';
@@ -169,6 +170,9 @@ class _HouseFormState extends State<HouseForm> {
     await addHouseAPI(_formData);
     // 提示
     PromptAction.sucess('添加成功');
+
+    // 订阅事件
+    eventBus.fire(RefreshEvent());
     // 返回
     // Navigator.pop(context);
     // Navigator.pop(context);
