@@ -49,71 +49,77 @@ class _HouseItemState extends State<HouseItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-      ),
-      child: Column(
-        children: [
-          Row(
+        padding: const EdgeInsets.all(10),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+        ),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, '/house_detail',
+                arguments: {'id': widget.item['id']});
+          },
+          child: Column(
             children: [
-              Expanded(child: Text(widget.item['point'])),
-              const Spacer(),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
-                decoration: BoxDecoration(
-                  color: xxUltra[widget.item['status']]['bgColor'],
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Text(
-                  // widget.item['status'] == 1
-                  //     ? '审核中'
-                  //     : widget.item['status'] == 2
-                  //         ? '审核通过'
-                  //         : '审核未通过',
-                  // xx[widget.item['status']]!,
-                  xxUltra[widget.item['status']]['text'],
-                  style: TextStyle(
-                    color: xxUltra[widget.item['status']]['color'],
+              Row(
+                children: [
+                  Expanded(child: Text(widget.item['point'])),
+                  const Spacer(),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+                    decoration: BoxDecoration(
+                      color: xxUltra[widget.item['status']]['bgColor'],
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Text(
+                      // widget.item['status'] == 1
+                      //     ? '审核中'
+                      //     : widget.item['status'] == 2
+                      //         ? '审核通过'
+                      //         : '审核未通过',
+                      // xx[widget.item['status']]!,
+                      xxUltra[widget.item['status']]['text'],
+                      style: TextStyle(
+                        color: xxUltra[widget.item['status']]['color'],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 15),
+              Row(
+                children: [
+                  Text(
+                    '房间号',
+                    style: TextStyle(color: Colors.grey),
                   ),
-                ),
-              )
-            ],
-          ),
-          const SizedBox(height: 15),
-          Row(
-            children: [
-              Text(
-                '房间号',
-                style: TextStyle(color: Colors.grey),
+                  Spacer(),
+                  Expanded(
+                    child: Text(
+                      '${widget.item['building']} ${widget.item['room']}',
+                      textAlign: TextAlign.right,
+                    ),
+                  ),
+                ],
               ),
-              Spacer(),
-              Expanded(
-                child: Text(
-                  '${widget.item['building']} ${widget.item['room']}',
-                  textAlign: TextAlign.right,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 15),
-          Row(
-            children: [
-              Text(
-                '业主',
-                style: TextStyle(color: Colors.grey),
-              ),
-              Spacer(),
-              Expanded(
-                child: Text(
-                  widget.item['name'],
-                  textAlign: TextAlign.right,
-                ),
+              const SizedBox(height: 15),
+              Row(
+                children: [
+                  Text(
+                    '业主',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  Spacer(),
+                  Expanded(
+                    child: Text(
+                      widget.item['name'],
+                      textAlign: TextAlign.right,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-        ],
-      ),
-    );
+        ));
   }
 }
