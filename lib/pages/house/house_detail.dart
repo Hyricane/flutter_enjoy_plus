@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../api/house.dart';
+import '../../utils/LoadingDialog.dart';
 
 class HouseDetail extends StatefulWidget {
   const HouseDetail({super.key, required this.id});
@@ -196,6 +197,6 @@ class _HouseDetailState extends State<HouseDetail> {
           title: const Text('房源详情'),
           centerTitle: true,
         ),
-        body: getDetailWidget());
+        body: house == null ? getLoadingWidget(context) : getDetailWidget());
   }
 }
