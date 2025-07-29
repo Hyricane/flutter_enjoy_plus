@@ -10,3 +10,6 @@ Future<dynamic> addHouseAPI(Map<String, dynamic> data) =>
 
 Future<dynamic> getHouseDetailAPI(id) =>
     requestDio.get('${HTTP_PATH.HOUSE_LIST}/$id');
+// 删除房屋
+Future<dynamic> delHouseAPI(id) =>
+    requestDio.delete('${HTTP_PATH.HOUSE_LIST}/$id');

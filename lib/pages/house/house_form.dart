@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:enjoy_plus_flutter_7/api/house.dart';
 import 'package:enjoy_plus_flutter_7/api/user.dart';
-import 'package:enjoy_plus_flutter_7/utils/EventBus.dart';
 import 'package:enjoy_plus_flutter_7/utils/LoadingDialog.dart';
 import 'package:enjoy_plus_flutter_7/utils/PhotoDialog.dart';
 import 'package:enjoy_plus_flutter_7/utils/PromptAction.dart';
@@ -10,6 +9,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../utils/EventBus.dart';
 
 class HouseForm extends StatefulWidget {
   const HouseForm({super.key, required this.params});
@@ -21,7 +22,7 @@ class HouseForm extends StatefulWidget {
 }
 
 class _HouseFormState extends State<HouseForm> {
-  final Map<String, dynamic> _formData = {
+  Map<String, dynamic> _formData = {
     'point': '', // 小区信息
     'building': '', // 小区楼栋信息
     'room': '', // 小区房间信息
@@ -31,13 +32,28 @@ class _HouseFormState extends State<HouseForm> {
     'idcardFrontUrl': '', // 身份证正面
     'idcardBackUrl': '', // 身份证背面
   };
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _mobileController = TextEditingController();
 
   @override
   initState() {
     super.initState();
-    _formData['point'] = widget.params['point'];
-    _formData['building'] = widget.params['building'];
-    _formData['room'] = widget.params['room'];
+    _formData = widget.params; // 将房屋详情整个赋值给表单_formData
+
+    //额外处理5个字段    添加
+    _formData['name'] = _formData['name'] ?? '';
+    _formData['mobile'] = _formData['mobile'] ?? '';
+    _formData['idcardFrontUrl'] = _formData['idcardFrontUrl'] ?? '';
+    _formData['idcardBackUrl'] = _formData['idcardBackUrl'] ?? '';
+    _formData['gender'] = _formData['gender'] ?? '1';
+
+    // 名字 手机号 需要通过控制器回显
+    _nameController.text = _formData['name']; // 单独处理名字  手机号的回显
+    _mobileController.text = _formData['mobile'];
+
+    // _formData['point'] = widget.params['point'];
+    // _formData['building'] = widget.params['building'];
+    // _formData['room'] = widget.params['room'];
     setState(() {});
     print(_formData);
   }
@@ -49,7 +65,12 @@ class _HouseFormState extends State<HouseForm> {
     // 关闭弹窗
     Navigator.of(context).pop();
     if (file != null) {
-      showDialog(context: context, builder: getLoadingWidget);
+      // getLoadingWidget(context);
+      showDialog(
+          context: context,
+          builder: (BuildContext ctx) {
+            return getLoadingWidget(ctx);
+          });
       var res = await uploadAvatarAPI(file, false);
       Navigator.of(context).pop();
       _formData[tag] = res['url']; // 传到服务器后的图片地址 存下来
@@ -170,12 +191,15 @@ class _HouseFormState extends State<HouseForm> {
     print('完成校验 等待请求');
     print(_formData);
 
-    await addHouseAPI(_formData);
-    // 提示
-    PromptAction.sucess('添加成功');
+    // 多一个字段需要删除
+    _formData.remove('status');
 
-    // 订阅事件
+    await addHouseAPI(_formData); // 以前id需要判断 后端拆了两个接口
+    // 提示
+    PromptAction.sucess('${_formData['id'] == null ? '新增' : '修改'}成功');
+    // 发布更新事件 => 安卓 web ios
     eventBus.fire(RefreshEvent());
+
     // 返回
     // Navigator.pop(context);
     // Navigator.pop(context);
@@ -185,6 +209,9 @@ class _HouseFormState extends State<HouseForm> {
     // 返回到指定的页面
     Navigator.popUntil(context, (Route<dynamic> route) {
       // 直到有一个页面的路由名是 /house
+      // 纯享bug:
+      // 表象: popUntil 一直返回直到某个页面  只能用于静态路由 不适用于动态路由!
+      // 解决: 动态生成的路由他不知道自己的名字 所以给他加个名字即可
       return route.settings.name == '/house';
     });
   }
@@ -193,7 +220,7 @@ class _HouseFormState extends State<HouseForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('添加房屋信息'),
+        title: Text('${_formData['id'] == null ? '新增' : '修改'}房屋信息'),
         backgroundColor: Colors.transparent,
         centerTitle: true,
       ),
@@ -230,6 +257,7 @@ class _HouseFormState extends State<HouseForm> {
             color: Colors.white,
             padding: const EdgeInsets.only(left: 10, right: 10),
             child: TextField(
+              controller: _nameController,
               maxLength: 15,
               decoration: const InputDecoration(
                 labelText: '姓名',
@@ -259,7 +287,7 @@ class _HouseFormState extends State<HouseForm> {
                 ),
                 const SizedBox(width: 20),
                 Radio(
-                  value: 1, // 当前单选框的值
+                  value: '1', // 当前单选框的值
                   groupValue: _formData['gender'], // Radio默认选中的值
                   onChanged: (value) {
                     // 选中状态改变时 触发onChange
@@ -273,7 +301,7 @@ class _HouseFormState extends State<HouseForm> {
                 const Text('男'),
                 const SizedBox(width: 10),
                 Radio(
-                  value: 0,
+                  value: '0',
                   groupValue: _formData['gender'],
                   onChanged: (value) {
                     setState(() {
@@ -291,6 +319,7 @@ class _HouseFormState extends State<HouseForm> {
             color: Colors.white,
             padding: const EdgeInsets.only(left: 10, right: 10),
             child: TextField(
+                controller: _mobileController,
                 keyboardType: TextInputType.phone,
                 maxLength: 11, // 最大长度
                 decoration: const InputDecoration(

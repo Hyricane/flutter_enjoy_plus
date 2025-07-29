@@ -20,6 +20,10 @@ class RefreshEvent {
   final String message = "refresh";
 }
 
+class AddSuccessEvent {
+  final String message = "addSuccess";
+}
+
 // EventBus如何使用
 // 订阅
 // eventBus.on<EatEvent>().listen((event) {

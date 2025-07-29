@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../api/house.dart';
+import '../../utils/EventBus.dart';
 import '../../utils/LoadingDialog.dart';
+import '../../utils/PromptAction.dart';
 
 class HouseDetail extends StatefulWidget {
   const HouseDetail({super.key, required this.id});
@@ -22,9 +24,43 @@ class _HouseDetailState extends State<HouseDetail> {
     }
   }
 
+  void _delHouse() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("提示消息"),
+            content: const Text("确认删除该房屋吗"),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    "取消",
+                    style: TextStyle(color: Colors.red),
+                  )),
+              TextButton(
+                  onPressed: () async {
+                    await delHouseAPI(widget.id);
+                    PromptAction.sucess("删除成功");
+                    eventBus.fire(RefreshEvent());
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    "确认",
+                  ))
+            ],
+          );
+        });
+  }
+
   void _getHouseDetail() async {
     var res = await getHouseDetailAPI(widget.id);
     house = res;
+    house!['gender'] = '${house!['gender']}'; // 强行把后端返回的gender改字符串
+    print('---');
 
     setState(() {});
   }
@@ -131,7 +167,9 @@ class _HouseDetailState extends State<HouseDetail> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _delHouse();
+                      },
                       child: const Column(
                         children: [
                           SizedBox(
@@ -144,7 +182,10 @@ class _HouseDetailState extends State<HouseDetail> {
                         ],
                       )),
                   ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/house_form',
+                            arguments: house);
+                      },
                       child: const Column(
                         children: [
                           SizedBox(
