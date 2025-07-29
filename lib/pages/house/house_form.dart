@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:enjoy_plus_flutter_7/api/house.dart';
 import 'package:enjoy_plus_flutter_7/api/user.dart';
 import 'package:enjoy_plus_flutter_7/utils/EventBus.dart';
+import 'package:enjoy_plus_flutter_7/utils/LoadingDialog.dart';
 import 'package:enjoy_plus_flutter_7/utils/PhotoDialog.dart';
 import 'package:enjoy_plus_flutter_7/utils/PromptAction.dart';
 import 'package:flutter/foundation.dart';
@@ -48,7 +49,9 @@ class _HouseFormState extends State<HouseForm> {
     // 关闭弹窗
     Navigator.of(context).pop();
     if (file != null) {
+      showDialog(context: context, builder: getLoadingWidget);
       var res = await uploadAvatarAPI(file, false);
+      Navigator.of(context).pop();
       _formData[tag] = res['url']; // 传到服务器后的图片地址 存下来
       print(res['url']);
       setState(() {});
